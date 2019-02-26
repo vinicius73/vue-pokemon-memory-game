@@ -10,12 +10,13 @@
 
 <script>
 import ImageFlip from './ImageFlip.vue'
-import { includes } from 'lodash-es'
+import { includes, upperCase } from 'lodash-es'
 
 export default {
   name: 'PokeCard',
   components: { ImageFlip },
   props: {
+    index: Number,
     selecteds: Array,
     findings: Array,
     pokemon: Object
@@ -32,7 +33,9 @@ export default {
       return `http://placehold.jp/ffffff/000000/150x150.png?text=${this.pokemon.identifier}`
     },
     placehold () {
-      return this.pokemon.identifier
+      return upperCase(
+        String.fromCharCode(97 + this.index)
+      )
     }
   },
   methods: {

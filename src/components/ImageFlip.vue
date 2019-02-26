@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     placeholdSrc () {
-      return `http://placehold.jp/000000/ffffff/150x150.png?text=${this.placehold}`
+      return `http://placehold.jp/ffffff/000000/150x150.png?text=${this.placehold}`
     }
   }
 }

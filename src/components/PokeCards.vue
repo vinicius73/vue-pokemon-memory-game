@@ -10,6 +10,7 @@
         :key="`column-${rowIndex}-${row.id}`">
         <PokeCard
           @select="onSelect"
+          :index="row.index"
           :selecteds="selectedsKeys"
           :findings="findingsIds"
           :pokemon="row" />

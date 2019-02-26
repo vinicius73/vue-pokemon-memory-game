@@ -2,7 +2,7 @@
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <div class="navbar-item mono">
-        <img :src="logo" title="Pokémon" alt="Pokémon"> Memory Game
+        <img :src="logo" title="Pokémon" alt="Pokémon" class="logo"> Memory Game
       </div>
     </div>
     <div class="navbar-menu">
@@ -88,6 +88,9 @@ export default {
 </script>
 
 <style>
+  .logo {
+    max-height: 3rem !important;
+  }
   .mono {
     font-family: monospace;
     font-weight: bold;

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="container is-fluid">
+    <div class="container">
       <AppHeader />
       <hr>
       <b-notification

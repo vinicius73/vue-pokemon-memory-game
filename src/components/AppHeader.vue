@@ -22,7 +22,7 @@
 
 <script>
 import { sample } from 'lodash-es'
-import { pokeSprite } from '../support/utils'
+import { pokeApiSprite } from '../support/utils'
 
 const ids = [150, 25, 245, 6, 384, 94, 257, 658, 445, 742, 718, 319, 202, 725, 242, 748, 39]
 const getPokemon = () => sample(ids)
@@ -40,7 +40,7 @@ export default {
   },
   computed: {
     logo () {
-      return pokeSprite(this.pokemon)
+      return pokeApiSprite(this.pokemon)
     }
   },
   watch: {

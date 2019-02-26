@@ -10,7 +10,7 @@
 
 <script>
 import ImageFlip from './ImageFlip.vue'
-import { pokeSprite } from '../support/utils'
+import { pokeDBSprite } from '../support/utils'
 import { includes, upperCase } from 'lodash-es'
 
 export default {
@@ -27,7 +27,7 @@ export default {
       return includes(this.selecteds, this.pokemon.index) || includes(this.findings, this.pokemon.id)
     },
     src () {
-      return pokeSprite(this.pokemon.id)
+      return pokeDBSprite(this.pokemon.identifier)
     },
     placehold () {
       return upperCase(

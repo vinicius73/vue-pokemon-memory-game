@@ -10,6 +10,7 @@
 
 <script>
 import ImageFlip from './ImageFlip.vue'
+import { pokeSprite } from '../support/utils'
 import { includes, upperCase } from 'lodash-es'
 
 export default {
@@ -27,7 +28,7 @@ export default {
     },
     src () {
       if (this.pokemon.is_default === 1) {
-        return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokemon.id}.png`
+        return pokeSprite(this.pokemon.id)
       }
 
       return `http://placehold.jp/ffffff/000000/150x150.png?text=${this.pokemon.identifier}`

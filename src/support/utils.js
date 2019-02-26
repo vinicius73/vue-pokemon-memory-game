@@ -5,4 +5,8 @@ const randomIntList = (size, max, min = 0) => {
     .map(() => random(min, max))
 }
 
-export { randomIntList }
+const pokeSprite = id => {
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
+}
+
+export { randomIntList, pokeSprite }

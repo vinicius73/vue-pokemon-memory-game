@@ -27,11 +27,7 @@ export default {
       return includes(this.selecteds, this.pokemon.index) || includes(this.findings, this.pokemon.id)
     },
     src () {
-      if (this.pokemon.is_default === 1) {
-        return pokeSprite(this.pokemon.id)
-      }
-
-      return `http://placehold.jp/ffffff/000000/150x150.png?text=${this.pokemon.identifier}`
+      return pokeSprite(this.pokemon.id)
     },
     placehold () {
       return upperCase(

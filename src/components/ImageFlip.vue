@@ -17,8 +17,11 @@ export default {
   },
   computed: {
     placeholdSrc () {
-      return `http://placehold.jp/ffffff/000000/150x150.png?text=${this.placehold}`
+      return `http://placehold.jp/ffffff/000000/172x172.png?text=${this.placehold}`
     }
+  },
+  mounted () {
+    (new Image()).src = this.src
   }
 }
 </script>

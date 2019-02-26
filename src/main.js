@@ -1,10 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
+import BNotification from 'buefy/dist/components/notification'
+import BIcon from 'buefy/dist/components/icon'
+import BLoading from 'buefy/dist/components/loading'
 import './registerServiceWorker'
-import Buefy from 'buefy'
 import './assets/scss/app.scss'
 
-Vue.use(Buefy)
+Vue.use(BNotification)
+Vue.use(BIcon)
+Vue.use(BLoading)
 
 Vue.config.productionTip = false
 

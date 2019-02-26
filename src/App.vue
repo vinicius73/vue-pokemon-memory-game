@@ -33,9 +33,10 @@
 <script>
 import AppFooter from './components/AppFooter.vue'
 import AppHeader from './components/AppHeader.vue'
-import PokeCards from './components/PokeCards.vue'
 import { isEmpty, map } from 'lodash-es'
 import { randomIntList } from './support/utils'
+
+const PokeCards = () => import(/* webpackChunkName: "poke-cards" */ './components/PokeCards.vue')
 
 export default {
   name: 'AppShell',
@@ -78,8 +79,8 @@ export default {
       this.isDone = false
       this.error = ''
 
-      fetch('/pokemon.json')
-        .then(response => response.json())
+      import(/* webpackChunkName: "pokemon-data" */'./assets/pokemon.json')
+        .then(module => Object.values(module))
         .then(data => {
           this.rawList = data
           this.updateIndexes()

@@ -44,6 +44,12 @@ export default {
     }
   },
   watch: {
+    logo (href) {
+      document.querySelectorAll('link[rel=icon')
+        .forEach(el => {
+          el.href = href
+        })
+    },
     isRunning: {
       immediate: true,
       handler  (value) {
@@ -72,7 +78,7 @@ export default {
   mounted () {
     this.$interval_nextPokemon = setInterval(() => {
       this.pokemon = getPokemon()
-    }, 5000)
+    }, 10000) // 10s
   },
   beforeDestroy () {
     this.stopTimer()

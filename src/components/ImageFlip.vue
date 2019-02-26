@@ -14,7 +14,7 @@ export default {
   },
   computed: {
     placeholdSrc () {
-      return `http://placehold.jp/ffffff/000000/172x172.png?text=${this.placehold}`
+      return `https://placehold.jp/ffffff/000000/172x172.png?text=${this.placehold}`
     },
     style () {
       const src = this.visible

@@ -1,15 +1,46 @@
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
-        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-      </a>
+      <div class="navbar-item">
+        <img :src="logo" title="Pokémon" alt="Pokémon"> Memory Game
+      </div>
     </div>
   </nav>
 </template>
 
 <script>
+import { sample } from 'lodash-es'
+
+const ids = [150, 25, 245, 6, 384, 94, 257, 658, 445, 742, 718, 319, 202, 725, 242, 748, 39]
+
+const getPokemon = () => sample(ids)
+
 export default {
-  name: 'AppHeader'
+  name: 'AppHeader',
+  data () {
+    return {
+      pokemon: getPokemon()
+    }
+  },
+  computed: {
+    logo () {
+      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokemon}.png`
+    }
+  },
+  mounted () {
+    this.$interval = setInterval(() => {
+      this.pokemon = getPokemon()
+    }, 5000)
+  },
+  beforeDestroy () {
+    clearInterval(this.$interval)
+  }
 }
 </script>
+
+<style>
+  .navbar-brand {
+    font-family: monospace;
+    font-weight: bold;
+  }
+</style>

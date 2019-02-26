@@ -48,6 +48,7 @@ export default {
     return {
       isLoading: true,
       isRunning: false,
+      isDone: false,
       error: '',
       rawList: [],
       indexes: []

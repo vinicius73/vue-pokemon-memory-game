@@ -49,6 +49,12 @@ export default {
       })
 
       return shuffle([...baseList, ...baseList])
+        .map((row, index) => {
+          return {
+            ...row,
+            index
+          }
+        })
     }
   },
   methods: {

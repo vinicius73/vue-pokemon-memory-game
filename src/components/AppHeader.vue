@@ -1,8 +1,20 @@
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <div class="navbar-item">
+      <div class="navbar-item mono">
         <img :src="logo" title="Pokémon" alt="Pokémon"> Memory Game
+      </div>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-end" v-if="isRunning">
+        <div class="navbar-item mono">
+          {{ timer }}s
+        </div>
+        <div class="navbar-item">
+          <button class="button is-dark" title="Restart" @click="reload">
+            <b-icon icon="reload" />
+          </button>
+        </div>
       </div>
     </div>
   </nav>
@@ -19,27 +31,58 @@ export default {
   name: 'AppHeader',
   data () {
     return {
-      pokemon: getPokemon()
+      pokemon: getPokemon(),
+      timer: 0
     }
+  },
+  props: {
+    isRunning: Boolean
   },
   computed: {
     logo () {
       return pokeSprite(this.pokemon)
     }
   },
+  watch: {
+    isRunning: {
+      immediate: true,
+      handler  (value) {
+        value
+          ? this.startTimer()
+          : this.stopTimer()
+      }
+    }
+  },
+  methods: {
+    startTimer () {
+      this.$interval_timer = setInterval(() => {
+        this.timer++
+      }, 1000)
+    },
+    stopTimer () {
+      clearInterval(this.$interval_timer)
+      this.$nextTick(() => {
+        this.timer = 0
+      })
+    },
+    reload () {
+      this.$emit('call:reload')
+    }
+  },
   mounted () {
-    this.$interval = setInterval(() => {
+    this.$interval_nextPokemon = setInterval(() => {
       this.pokemon = getPokemon()
     }, 5000)
   },
   beforeDestroy () {
-    clearInterval(this.$interval)
+    this.stopTimer()
+    clearInterval(this.$interval_nextPokemon)
   }
 }
 </script>
 
 <style>
-  .navbar-brand {
+  .mono {
     font-family: monospace;
     font-weight: bold;
   }

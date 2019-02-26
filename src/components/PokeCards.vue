@@ -21,7 +21,7 @@
 
 <script>
 import PokeCard from './PokeCard.vue'
-import { chunk, includes, map, find, size, toUpper } from 'lodash-es'
+import { chunk, includes, map, find, size, toUpper, shuffle } from 'lodash-es'
 import { Snackbar } from 'buefy/dist/components/snackbar'
 
 export default {
@@ -37,18 +37,33 @@ export default {
     pokemon: Array
   },
   computed: {
+    rawList () {
+      const { pokemon } = this
+      return shuffle([...pokemon, ...pokemon])
+        .map((row, index) => {
+          return {
+            ...row,
+            index
+          }
+        })
+    },
     lists () {
-      return chunk(this.pokemon, 6)
+      return chunk(this.rawList, 6)
     },
     selecteds () {
       return map(this.selectedsKeys, index => {
-        return find(this.pokemon, row => {
+        return find(this.rawList, row => {
           return row.index === index
         })
       })
+    },
+    isDone () {
+      return size(this.findingsIds) === size(this.pokemon)
     }
   },
   watch: {
+    isDone: 'onDone',
+    pokemon: 'reset',
     selecteds (values) {
       if (size(values) === 2) {
         const [pokeA, pokeB] = values
@@ -73,6 +88,16 @@ export default {
     }
   },
   methods: {
+    reset () {
+      Object.assign(this, this.$options.data.call(this))
+    },
+    onDone (value) {
+      if (!value) {
+        return
+      }
+
+      this.$emit('done')
+    },
     onSelect ({ id, index }) {
       if (includes(this.findingsIds, id)) {
         return

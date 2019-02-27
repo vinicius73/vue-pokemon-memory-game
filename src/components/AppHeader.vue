@@ -6,11 +6,11 @@
       </div>
     </div>
     <div class="navbar-menu">
-      <div class="navbar-end" v-if="isRunning">
+      <div class="navbar-end">
         <div class="navbar-item mono">
           {{ timer }}s
         </div>
-        <div class="navbar-item">
+        <div class="navbar-item" v-if="isRunning">
           <button class="button is-dark" title="Restart" @click="reload">
             <b-icon icon="reload" />
           </button>

@@ -7,13 +7,18 @@
     </div>
     <div class="navbar-menu">
       <div class="navbar-end">
-        <div class="navbar-item mono">
-          {{ timer | secToTimeStr(false) }}
-        </div>
-        <div class="navbar-item" v-if="isRunning">
-          <button class="button is-dark" title="Restart" @click="reload">
-            <b-icon icon="reload" />
-          </button>
+        <div class="navbar-item">
+          <div class="tags has-addons">
+            <span class="tag is-medium" :class="isRunning ? 'is-info' : 'is-black'">
+              <b-icon icon="clock" />
+            </span>
+            <span class="tag is-medium mono" :class="isRunning ? 'is-info' : 'is-black'">
+              {{ timer | secToTimeStr(false) }}
+            </span>
+            <a class="tag is-dark is-medium" title="Restart" @click="reload" v-if="isRunning">
+              <b-icon icon="reload" />
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -61,15 +66,13 @@ export default {
   },
   methods: {
     startTimer () {
+      this.timer = 0
       this.$interval_timer = setInterval(() => {
         this.timer++
       }, 1000)
     },
     stopTimer () {
       clearInterval(this.$interval_timer)
-      this.$nextTick(() => {
-        this.timer = 0
-      })
     },
     reload () {
       this.$emit('call:reload')

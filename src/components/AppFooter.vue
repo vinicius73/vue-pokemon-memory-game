@@ -7,19 +7,28 @@
         by
         <a href="https://github.com/vinicius73" target="_blank">@vinicius73</a>
       </p>
+      <p>
+        <a href="https://github.com/vinicius73/vue-pokemon-memory-game" target="_blank">
+          <small>{{ $options.version }}</small>
+        </a>
+      </p>
     </div>
   </footer>
 </template>
 
 <script>
 export default {
-  name: 'Footer'
+  name: 'Footer',
+  version: process.env.VUE_APP_VERSION
 }
 </script>
 
-<style media="screen">
+<style lang="scss">
   .footer {
     background-color: transparent !important;
     font-family: monospace;
+    a {
+      color: #000;
+    }
   }
 </style>

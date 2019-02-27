@@ -12,8 +12,9 @@ A simple memory game using pokémon.
 - [Material Design Icons](https://materialdesignicons.com/)
 
 ## Commands
-```shell
+
+```sh
 yarn install // install deps
-yarn run serve // serve app in port 80
+yarn run serve // serve app http://localhost:8080
 yarn run build // build app
 ```

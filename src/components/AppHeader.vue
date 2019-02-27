@@ -8,7 +8,7 @@
     <div class="navbar-menu">
       <div class="navbar-end">
         <div class="navbar-item mono">
-          {{ timer }}s
+          {{ timer | secToTimeStr(false) }}
         </div>
         <div class="navbar-item" v-if="isRunning">
           <button class="button is-dark" title="Restart" @click="reload">

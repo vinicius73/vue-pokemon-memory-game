@@ -1,29 +1,19 @@
-# vue-poke-memo
+# Pokémon - Memory Game
 
-## Project setup
-```
-yarn install
-```
+A simple memory game using pokémon.
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+![demo](demo-cover.png)
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+## Resources used
 
-### Run your tests
-```
-yarn run test
-```
+- [Vue.js (PWA)](https://vuejs.org)
+- [Buefy](https://buefy.org/)
+- [Bulma CSS](https://bulma.io/)
+- [Material Design Icons](https://materialdesignicons.com/)
 
-### Lints and fixes files
+## Commands
+```shell
+yarn install // install deps
+yarn run serve // serve app in port 80
+yarn run build // build app
 ```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

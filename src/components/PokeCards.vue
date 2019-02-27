@@ -67,23 +67,29 @@ export default {
     selecteds (values) {
       if (size(values) === 2) {
         const [pokeA, pokeB] = values
+
         if (pokeA.id === pokeB.id) {
           this.findingsIds = [...this.findingsIds, pokeA.id]
+
           Snackbar.open({
             position: 'is-top',
-            message: `You find ${toUpper(pokeA.identifier)}!`
+            message: `You find ${toUpper(pokeA.identifier)}!`,
+            queue: false,
+            duration: 1000
           })
         } else {
           Snackbar.open({
             type: 'is-warning',
             position: 'is-top',
-            message: 'Try again!'
+            message: 'Try again!',
+            queue: false,
+            duration: 1000
           })
         }
 
         setTimeout(() => {
           this.selectedsKeys = []
-        }, 1000)
+        }, 700)
       }
     }
   },
@@ -99,6 +105,10 @@ export default {
       this.$emit('done')
     },
     onSelect ({ id, index }) {
+      if (size(this.selectedsKeys) >= 2) {
+        return
+      }
+
       if (includes(this.findingsIds, id)) {
         return
       }

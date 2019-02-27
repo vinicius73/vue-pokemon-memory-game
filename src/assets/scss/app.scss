@@ -1,6 +1,6 @@
 @import "~bulma/sass/utilities/initial-variables";
 @import "~bulma/sass/utilities/functions";
-// 1. Set your own initial variables and derived 
+// 1. Set your own initial variables and derived
 //    variables in _variables.scss
 @import "variables";
 
@@ -26,3 +26,7 @@ $colors: map-merge($colors, $addColors);
 @import "~buefy/src/scss/buefy";
 
 // 4. Provide custom buefy overrides and site styles here
+
+.card.is-spotlight {
+  box-shadow: 0 2px 3px rgba($red, 0.3), 0 0 0 1px rgba($red, 0.3)
+}

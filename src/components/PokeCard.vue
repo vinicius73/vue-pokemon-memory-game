@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="card">
+  <div class="card" :class="{ 'is-spotlight': isFound }">
     <div class="card-image">
       <ImageFlip
         @click.native="onClick"
@@ -23,7 +23,13 @@ export default {
   },
   computed: {
     visible () {
-      return includes(this.selecteds, this.pokemon.index) || includes(this.findings, this.pokemon.id)
+      return this.isSelected || this.isFound
+    },
+    isSelected () {
+      return includes(this.selecteds, this.pokemon.index)
+    },
+    isFound () {
+      return includes(this.findings, this.pokemon.id)
     },
     placehold () {
       return upperCase(

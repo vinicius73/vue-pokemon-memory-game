@@ -1,8 +1,17 @@
-import { random } from 'lodash-es'
+import { random, uniq, size } from 'lodash-es'
 
-const randomIntList = (size, max, min = 0) => {
-  return new Array(size).fill(0)
-    .map(() => random(min, max))
+const nextUniq = (length, min, max, original = []) => {
+  const cleaned = uniq(original)
+
+  if (size(cleaned) === length) {
+    return cleaned
+  }
+
+  return nextUniq(length, min, max, [...cleaned, random(min, max)])
+}
+
+const randomIntList = (length, max, min = 0) => {
+  return nextUniq(length, max, min)
 }
 
 const pokeDBSprite = key => {

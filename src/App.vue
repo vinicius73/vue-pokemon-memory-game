@@ -71,7 +71,7 @@ export default {
       this.isDone = true
     },
     updateIndexes () {
-      this.indexes = randomIntList(9, this.rawList.length, 0)
+      this.indexes = randomIntList(9, this.rawList.length - 1, 0)
     },
     loadData () {
       this.isLoading = true

@@ -32,8 +32,18 @@ export default {
       return includes(this.findings, this.pokemon.id)
     },
     placehold () {
+      const { index } = this
+      if (index > 25) {
+        const letter = index % 26
+        const base = Math.floor(index / 26) - 1
+
+        return upperCase(
+          String.fromCharCode(97 + base) + String.fromCharCode(97 + letter)
+        )
+      }
+
       return upperCase(
-        String.fromCharCode(97 + this.index)
+        String.fromCharCode(97 + index)
       )
     }
   },

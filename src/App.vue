@@ -2,7 +2,9 @@
   <div id="app">
     <div class="container">
       <AppHeader v-bind="{ isRunning }" @call:reload="loadData" />
-      <hr>
+
+      <LevelSelect v-model="level" />
+
       <b-notification
         has-icon
         @close="loadData"
@@ -33,6 +35,7 @@
 <script>
 import AppFooter from './components/AppFooter.vue'
 import AppHeader from './components/AppHeader.vue'
+import LevelSelect from './components/LevelSelect.vue'
 import { isEmpty, map } from 'lodash-es'
 import { randomIntList } from './support/utils'
 
@@ -42,6 +45,7 @@ export default {
   name: 'AppShell',
   components: {
     PokeCards,
+    LevelSelect,
     AppHeader,
     AppFooter
   },
@@ -51,6 +55,7 @@ export default {
       isRunning: false,
       isDone: false,
       error: '',
+      level: 9,
       rawList: [],
       indexes: []
     }
@@ -65,13 +70,26 @@ export default {
       })
     }
   },
+  watch: {
+    level () {
+      this.isRunning = false
+      this.isLoading = true
+
+      this.updateIndexes()
+
+      setTimeout(() => {
+        this.isRunning = true
+        this.isLoading = false
+      }, 1000)
+    }
+  },
   methods: {
     onDone () {
       this.isRunning = false
       this.isDone = true
     },
     updateIndexes () {
-      this.indexes = randomIntList(9, this.rawList.length - 1, 0)
+      this.indexes = randomIntList(this.level, this.rawList.length - 1, 0)
     },
     loadData () {
       this.isLoading = true

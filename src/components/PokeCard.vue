@@ -3,14 +3,13 @@
     <div class="card-image">
       <ImageFlip
         @click.native="onClick"
-        v-bind="{ src, placehold, visible }" />
+        v-bind="{ pokemon, placehold, visible }" />
     </div>
   </div>
 </template>
 
 <script>
 import ImageFlip from './ImageFlip.vue'
-import { pokeDBSprite } from '../support/utils'
 import { includes, upperCase } from 'lodash-es'
 
 export default {
@@ -25,9 +24,6 @@ export default {
   computed: {
     visible () {
       return includes(this.selecteds, this.pokemon.index) || includes(this.findings, this.pokemon.id)
-    },
-    src () {
-      return pokeDBSprite(this.pokemon.identifier)
     },
     placehold () {
       return upperCase(

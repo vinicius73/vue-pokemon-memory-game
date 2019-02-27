@@ -5,16 +5,30 @@
 </template>
 
 <script>
+import { pokeDBSprite } from '../support/utils'
+
 export default {
   name: 'ImageFlip',
   props: {
+    pokemon: Object,
     visible: Boolean,
-    src: String,
     placehold: String
   },
+  data: () => ({
+    error: false
+  }),
   computed: {
     placeholdSrc () {
       return `https://placehold.jp/ffffff/000000/172x172.png?text=${this.placehold}`
+    },
+    src () {
+      const { pokemon, error } = this
+
+      if (error) {
+        return `https://placehold.jp/ffffff/ff0000/172x172.png?text=${pokemon.identifier}`
+      }
+
+      return pokeDBSprite(pokemon.identifier)
     },
     style () {
       const src = this.visible
@@ -26,7 +40,13 @@ export default {
     }
   },
   mounted () {
-    (new Image()).src = this.src
+    const im = new Image()
+
+    im.onerror = () => {
+      this.error = true
+    }
+
+    im.src = this.src
   }
 }
 </script>

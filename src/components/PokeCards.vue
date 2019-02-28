@@ -107,7 +107,7 @@ export default {
 
         setTimeout(() => {
           this.selectedsKeys = []
-        }, 700)
+        }, 400)
       }
     }
   },

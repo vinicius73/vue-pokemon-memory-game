@@ -38,6 +38,7 @@ import AppHeader from './components/AppHeader.vue'
 import LevelSelect from './components/LevelSelect.vue'
 import { isEmpty, map } from 'lodash-es'
 import { randomIntList } from './support/utils'
+import { Snackbar } from 'buefy/dist/components/snackbar'
 
 const PokeCards = () => import(/* webpackChunkName: "poke-cards" */ './components/PokeCards.vue')
 
@@ -115,6 +116,19 @@ export default {
   },
   mounted () {
     this.loadData()
+  },
+  created () {
+    document.addEventListener('sw:update', () => {
+      const reload = () => document.location.reload(true)
+
+      Snackbar.open({
+        message: 'There is an update available.',
+        actionText: 'Reload Now',
+        type: 'is-warning',
+        indefinite: true,
+        onAction: reload
+      })
+    })
   }
 }
 </script>

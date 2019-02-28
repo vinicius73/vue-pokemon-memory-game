@@ -7,6 +7,9 @@ module.exports = {
   pwa: {
     name: 'Pokémon - Memory Game',
     appleMobileWebAppCapable: 'yes',
-    appleMobileWebAppStatusBarStyle: 'black'
+    appleMobileWebAppStatusBarStyle: 'black',
+    workboxOptions: {
+      skipWaiting: true
+    }
   }
 }

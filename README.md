@@ -1,6 +1,7 @@
 # Pokémon - Memory Game
 
 A simple memory game using pokémon.
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/a55967e2-feb2-4ae4-bb35-d58e6c0d1321/deploy-status)](https://app.netlify.com/sites/vue-pokemon-memory-game/deploys)
 
 ![demo](demo-cover.png)

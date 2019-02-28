@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="">
     <div
-      class="columns"
+      class="columns is-mobile"
       v-for="(list, index) in lists"
       :key="`row-${index}`">
       <div
@@ -21,6 +21,8 @@
 
 <script>
 import PokeCard from './PokeCard.vue'
+import { isMobile } from '../support/utils'
+import { getColsNumber } from '../support/grid'
 import { chunk, includes, map, find, size, toUpper, shuffle } from 'lodash-es'
 import { Snackbar } from 'buefy/dist/components/snackbar'
 
@@ -48,7 +50,12 @@ export default {
         })
     },
     lists () {
-      return chunk(this.rawList, 6)
+      if (isMobile()) {
+        return chunk(this.rawList, 2)
+      }
+
+      const cols = getColsNumber(size(this.rawList))
+      return chunk(this.rawList, cols)
     },
     selecteds () {
       return map(this.selectedsKeys, index => {

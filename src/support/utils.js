@@ -22,4 +22,6 @@ const pokeApiSprite = id => {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
 }
 
-export { randomIntList, pokeDBSprite, pokeApiSprite }
+const isMobile = () => window.screen.width <= 699
+
+export { randomIntList, pokeDBSprite, pokeApiSprite, isMobile }

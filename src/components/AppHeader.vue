@@ -2,8 +2,9 @@
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <div class="navbar-item mono">
-        <img :src="logo" title="Pokémon" alt="Pokémon" class="logo"> Memory Game
+        <img :src="logo" title="Pokémon" alt="Pokémon" class="logo"> Pokémon - Memory Game
       </div>
+      <slot />
     </div>
     <div class="navbar-menu">
       <div class="navbar-end">

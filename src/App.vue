@@ -1,9 +1,7 @@
 <template>
   <div id="app">
-    <div class="container">
+    <div class="container is-fluid">
       <AppHeader v-bind="{ isRunning }" @call:reload="loadData" />
-
-      <LevelSelect v-model="level" />
 
       <b-notification
         has-icon
@@ -24,8 +22,11 @@
       </b-notification>
 
       <PokeCards
+        id="main"
         @done="onDone"
-        :pokemon="list" />
+        :pokemon="list">
+        <LevelSelect v-model="level" />
+      </PokeCards>
       <AppFooter />
     </div>
     <b-loading is-full-page :active="isLoading" />
@@ -132,3 +133,9 @@ export default {
   }
 }
 </script>
+
+<style>
+  #main {
+    /* margin-top: 10px; */
+  }
+</style>

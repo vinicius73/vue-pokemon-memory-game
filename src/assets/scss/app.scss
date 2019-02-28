@@ -30,3 +30,7 @@ $colors: map-merge($colors, $addColors);
 .card.is-spotlight {
   box-shadow: 0 2px 3px rgba($red, 0.3), 0 0 0 1px rgba($red, 0.3)
 }
+
+.column {
+  padding-top: 0;
+}

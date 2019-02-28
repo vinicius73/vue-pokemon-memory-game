@@ -1,7 +1,18 @@
 <template lang="html">
-  <div class="">
+  <div class="poke-cards">
+    <div class="poke-cards--header columns">
+      <div class="column is-four-fifths">
+        <slot />
+      </div>
+      <div class="column is-hidden-mobile">
+        <div class="is-pulled-right tags has-addons">
+          <span class="tag is-dark">Pokémon</span>
+          <span class="tag is-info">{{ findingsIds.length }}/{{ pokemon.length }}</span>
+        </div>
+      </div>
+    </div>
     <div
-      class="columns is-mobile"
+      class="columns is-mobile is-variable is-1"
       v-for="(list, index) in lists"
       :key="`row-${index}`">
       <div
@@ -51,7 +62,7 @@ export default {
     },
     lists () {
       if (isMobile()) {
-        return chunk(this.rawList, 2)
+        return chunk(this.rawList, 3)
       }
 
       const cols = getColsNumber(size(this.rawList))
@@ -131,3 +142,10 @@ export default {
   }
 }
 </script>
+
+<style>
+  .poke-cards--header {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+</style>

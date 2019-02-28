@@ -56,7 +56,7 @@ export default {
       isRunning: false,
       isDone: false,
       error: '',
-      level: 8,
+      level: 6,
       rawList: [],
       indexes: []
     }

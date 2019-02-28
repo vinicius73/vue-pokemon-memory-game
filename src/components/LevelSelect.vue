@@ -1,10 +1,10 @@
 <template>
-  <div class="field has-addons">
-    <p class="control" v-for="level, index in $options.levels" :key="index">
-      <a class="button" @click="$emit('input', level)">
-        <span class="tag" :class="level===value ? 'is-danger' : 'is-black' " >{{ level*2 }}</span>
-      </a>
-    </p>
+  <div class="buttons has-addons">
+    <a v-for="level in $options.levels" :key="level"
+      class="button"
+      @click="$emit('input', level)">
+      <span class="tag" :class="level===value ? 'is-danger' : 'is-black' " >{{ level*2 }}</span>
+    </a>
   </div>
 </template>
 

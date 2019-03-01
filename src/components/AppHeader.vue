@@ -10,13 +10,19 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="tags has-addons">
-            <span class="tag is-medium" :class="isRunning ? 'is-info' : 'is-black'">
+            <span class="tag is-medium" :class="isRunning ? 'is-dark' : 'is-black'">
               <b-icon icon="clock" />
             </span>
-            <span class="tag is-medium mono" :class="isRunning ? 'is-info' : 'is-black'">
+            <span class="tag is-medium mono" :class="isRunning ? 'is-dark' : 'is-black'">
               {{ timer | secToTimeStr(false) }}
             </span>
-            <a class="tag is-dark is-medium" title="Restart" @click="loadPokemon" v-if="isRunning">
+            <span class="tag is-medium is-black">
+              <b-icon icon="counter" />
+            </span>
+            <span class="tag is-medium mono is-black">
+              {{ score }}
+            </span>
+            <a class="tag is-warning is-medium" title="Restart" @click="loadPokemon" v-if="isRunning">
               <b-icon icon="reload" />
             </a>
           </div>
@@ -43,7 +49,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['isRunning']),
+    ...mapState(['isRunning', 'score']),
     ...mapGetters(['isDone']),
     timerStatus () {
       return this.isRunning && !this.isDone

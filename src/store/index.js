@@ -13,5 +13,6 @@ export default new Store({
   actions,
   getters,
   state,
+  strict: process.env.NODE_ENV !== 'production',
   plugins: [cardsActions]
 })

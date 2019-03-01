@@ -20,7 +20,7 @@ const cardsActionsPlugin = store => {
 
   const addFound = ({ id, identifier }) => {
     cathAlert(identifier)
-    store.commit(mutations.addFound, id)
+    store.dispatch('addFound', id)
   }
 
   store.watch(
@@ -37,6 +37,10 @@ const cardsActionsPlugin = store => {
       // need reset
       if (size(selectedCards) === 2) {
         resetSelecteds()
+
+        if (!isMath) {
+          store.commit(mutations.addFailure)
+        }
       }
     }
   )

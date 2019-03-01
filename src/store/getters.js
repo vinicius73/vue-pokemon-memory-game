@@ -58,5 +58,19 @@ export default {
     }
 
     return false
+  },
+  baseScore: ({ level }) => {
+    return level * level
+  },
+  nextScoreIncrement: ({ level, failures }, { baseScore }) => {
+    if (failures === 0) {
+      return baseScore
+    }
+
+    // max factor
+    const factor = failures < 10 ? (failures / 10) : 0.9
+    const value = baseScore - (baseScore * factor)
+
+    return Math.floor(value)
   }
 }

@@ -5,6 +5,8 @@ const loadPokemon = ({ commit }) => {
   commit(mutations.setIsRunning, false)
   commit(mutations.resetSelecteds)
   commit(mutations.resetFound)
+  commit(mutations.resetFailures)
+  commit(mutations.resetScore)
 
   return import(/* webpackChunkName: "pokemon-data" */'../assets/pokemon.json')
     .then(module => Object.values(module))
@@ -27,7 +29,16 @@ const selectPokeCard = ({ commit }, pokemon) => {
 
 const setLevel = ({ commit, dispatch }, level) => {
   commit(mutations.setLevel, level)
+
   return dispatch('loadPokemon')
 }
 
-export default { loadPokemon, selectPokeCard, setLevel }
+const addFound = ({ commit, state, getters }, id) => {
+  const { nextScoreIncrement } = getters
+
+  commit(mutations.addFound, id)
+  commit(mutations.addScore, nextScoreIncrement)
+  commit(mutations.resetFailures)
+}
+
+export default { loadPokemon, selectPokeCard, setLevel, addFound }

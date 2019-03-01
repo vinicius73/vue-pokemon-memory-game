@@ -19,7 +19,7 @@
         class="column"
         v-for="(row, rowIndex) in list"
         :key="`column-${rowIndex}-${row.id}`">
-        <PokeCard
+        <Card
           @select="onSelect"
           :selecteds="selecteds"
           :findings="found"
@@ -30,12 +30,12 @@
 </template>
 
 <script>
-import PokeCard from './PokeCard.vue'
+import Card from './Card.vue'
 import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
   name: 'PokeCards',
-  components: { PokeCard },
+  components: { Card },
   computed: {
     ...mapGetters(['pokeCardsLists', 'foundCount']),
     ...mapState(['found', 'selecteds', 'level'])

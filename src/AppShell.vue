@@ -1,16 +1,16 @@
 <template>
   <div id="app">
     <div class="container is-fluid">
-      <AppHeader />
+      <ShellHeader />
 
-      <AppAlertError @close="loadPokemon" />
-      <AppAlertDone @close="loadPokemon" />
+      <ShellAlertError @close="loadPokemon" />
+      <ShellAlertDone @close="loadPokemon" />
 
       <PokeCards id="main">
         <LevelSelect />
       </PokeCards>
 
-      <AppFooter />
+      <ShellFooter />
     </div>
     <b-loading is-full-page :active="isLoading" />
   </div>
@@ -18,24 +18,18 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import AppFooter from './components/AppFooter.vue'
-import AppAlertError from './components/AppAlertError.vue'
-import AppAlertDone from './components/AppAlertDone.vue'
-import AppHeader from './components/AppHeader.vue'
-import LevelSelect from './components/LevelSelect.vue'
 import { Snackbar } from 'buefy/dist/components/snackbar'
+import ShellComponents from './components/Shell'
 
-const PokeCards = () => import(/* webpackChunkName: "poke-cards" */ './components/PokeCards.vue')
+const LevelSelect = () => import(/* webpackChunkName: "level-select" */ './components/LevelSelect.vue')
+const PokeCards = () => import(/* webpackChunkName: "poke-cards" */ './components/PokeCards/Main.vue')
 
 export default {
   name: 'AppShell',
   components: {
     PokeCards,
     LevelSelect,
-    AppHeader,
-    AppAlertDone,
-    AppAlertError,
-    AppFooter
+    ...ShellComponents
   },
   computed: {
     ...mapState(['error', 'isLoading'])

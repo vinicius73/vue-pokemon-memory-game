@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { pokeDBSprite } from '../support/utils'
+import { pokeDBSprite } from '../../support/utils'
 
 export default {
   name: 'ImageFlip',

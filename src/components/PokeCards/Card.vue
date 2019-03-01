@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="card" :class="{ 'is-spotlight': isFound }">
     <div class="card-image">
-      <ImageFlip
+      <CardImage
         @click.native="onClick"
         v-bind="{ pokemon, placehold, visible }" />
     </div>
@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import ImageFlip from './ImageFlip.vue'
+import CardImage from './CardImage.vue'
 import { includes, upperCase } from 'lodash-es'
 
 export default {
   name: 'PokeCard',
-  components: { ImageFlip },
+  components: { CardImage },
   props: {
     selecteds: Array,
     findings: Array,

@@ -18,11 +18,12 @@ export default {
   props: {
     selecteds: Array,
     findings: Array,
-    pokemon: Object
+    pokemon: Object,
+    forceDisplay: Boolean
   },
   computed: {
     visible () {
-      return this.isSelected || this.isFound
+      return this.forceDisplay || this.isSelected || this.isFound
     },
     isSelected () {
       return includes(this.selecteds, this.pokemon.index)

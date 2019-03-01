@@ -59,8 +59,11 @@ export default {
 
     return false
   },
-  baseScore: ({ level }) => {
-    return level * level
+  baseScore: ({ level, isEasyMode }) => {
+    const base = level * level
+    return isEasyMode
+      ? Math.floor(base / 2)
+      : base
   },
   nextScoreIncrement: ({ level, failures }, { baseScore }) => {
     if (failures === 0) {

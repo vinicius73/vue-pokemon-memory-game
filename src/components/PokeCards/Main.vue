@@ -5,9 +5,15 @@
         <slot />
       </div>
       <div class="column is-hidden-mobile">
-        <div class="is-pulled-right tags has-addons">
+        <!-- <div class="is-pulled-right tags has-addons">
           <span class="tag is-dark">Pokémon</span>
           <span class="tag is-info">{{ foundCount }}/{{ level }}</span>
+        </div> -->
+
+        <div class="field is-pulled-right">
+            <b-switch type="is-danger" :value="isEasyMode" @input="setIsEasyMode">
+                {{ isEasyMode ? 'Easy mode' : 'Normal mode' }}
+            </b-switch>
         </div>
       </div>
     </div>
@@ -21,7 +27,7 @@
         :key="`column-${rowIndex}-${row.id}`">
         <Card
           @select="onSelect"
-          :selecteds="selecteds"
+          v-bind="{ forceDisplay, selecteds }"
           :findings="found"
           :pokemon="row" />
       </div>
@@ -31,22 +37,57 @@
 
 <script>
 import Card from './Card.vue'
+import { Toast } from 'buefy/dist/components/toast'
+import { throttle } from 'lodash-es'
 import { mapGetters, mapActions, mapState } from 'vuex'
+
+const getThemAll = () => {
+  Toast.open({
+    type: 'is-info',
+    message: 'Get them all!'
+  })
+}
 
 export default {
   name: 'PokeCards',
   components: { Card },
+  data: () => ({
+    forceDisplay: false
+  }),
   computed: {
     ...mapGetters(['pokeCardsLists', 'foundCount']),
-    ...mapState(['found', 'selecteds', 'level'])
+    ...mapState(['found', 'selecteds', 'level', 'isEasyMode'])
   },
   watch: {
+    pokeCardsLists: 'bootstrap'
   },
   methods: {
-    ...mapActions(['selectPokeCard']),
+    ...mapActions(['selectPokeCard', 'setIsEasyMode']),
+    bootstrap: throttle(function bootstrap () {
+      this.forceDisplay = false
+      clearTimeout(this.$timeout)
+
+      if (!this.isEasyMode) {
+        return
+      }
+
+      this.$nextTick(() => {
+        this.forceDisplay = true
+
+        this.$timeout = setTimeout(() => {
+          getThemAll()
+          this.forceDisplay = false
+        }, (this.level / 2) * 1000)
+      })
+    }, 1500),
     onSelect (pokemon) {
-      this.selectPokeCard(pokemon)
+      if (!this.forceDisplay) {
+        this.selectPokeCard(pokemon)
+      }
     }
+  },
+  mounted () {
+    this.bootstrap()
   }
 }
 </script>

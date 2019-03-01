@@ -1,5 +1,6 @@
 export const setError = 'set/error'
 export const setLevel = 'set/level'
+export const setIsEasyMode = 'set/isEasyMode'
 export const setIsRunning = 'set/isRunning'
 export const setIsLoading = 'set/isLoading'
 export const setPokemonRawList = 'set/pokemonRawList'

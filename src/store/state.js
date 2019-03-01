@@ -6,6 +6,7 @@ export default {
   failures: 0,
   error: '',
   isRunning: false,
+  isEasyMode: false,
   isLoading: false,
   isMobile: isMobile(),
   found: [],

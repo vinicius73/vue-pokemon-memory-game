@@ -25,8 +25,9 @@ const selectPokeCard = ({ commit }, pokemon) => {
   commit(mutations.addSelected, pokemon.index)
 }
 
-const setLevel = ({ commit }, level) => {
+const setLevel = ({ commit, dispatch }, level) => {
   commit(mutations.setLevel, level)
+  return dispatch('loadPokemon')
 }
 
 export default { loadPokemon, selectPokeCard, setLevel }

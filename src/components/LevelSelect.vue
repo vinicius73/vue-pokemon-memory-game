@@ -1,15 +1,17 @@
 <template>
   <div class="buttons has-addons">
-    <a v-for="level in $options.levels" :key="level"
+    <a v-for="value in $options.levels" :key="value"
       class="button"
-      @click="$emit('input', level)">
-      <span class="tag" :class="level===value ? 'is-danger' : 'is-black' " >{{ level*2 }}</span>
+      @click="setLevel(value)">
+      <span class="tag" :class="level===value ? 'is-danger' : 'is-black' " >{{ value*2 }}</span>
     </a>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 import { isMobile } from '../support/utils'
+
 const makeLevels = (base, length) => Array.from({ length }).map((_, index) => {
   return base * (index + 1)
 })
@@ -22,6 +24,12 @@ export default {
   levels: makeLevels(6, isMobile() ? 5 : 10),
   props: {
     value: Number
+  },
+  computed: {
+    ...mapState(['level'])
+  },
+  methods: {
+    ...mapActions(['setLevel'])
   }
 }
 </script>

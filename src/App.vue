@@ -1,32 +1,15 @@
 <template>
   <div id="app">
     <div class="container is-fluid">
-      <AppHeader v-bind="{ isRunning }" @call:reload="loadData" />
+      <AppHeader />
 
-      <b-notification
-        has-icon
-        @close="loadData"
-        v-if="hasError"
-        type="is-danger">
-        <p>{{ error }}</p>
-      </b-notification>
+      <AppAlertError @close="loadPokemon" />
+      <AppAlertDone @close="loadPokemon" />
 
-      <b-notification
-        has-icon
-        @close="loadData"
-        v-if="isDone"
-        type="is-success">
-        <p>
-          Congratulations, you got them all!
-        </p>
-      </b-notification>
-
-      <PokeCards
-        id="main"
-        @done="onDone"
-        :pokemon="list">
-        <LevelSelect v-model="level" />
+      <PokeCards id="main">
+        <LevelSelect />
       </PokeCards>
+
       <AppFooter />
     </div>
     <b-loading is-full-page :active="isLoading" />
@@ -34,11 +17,12 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 import AppFooter from './components/AppFooter.vue'
+import AppAlertError from './components/AppAlertError.vue'
+import AppAlertDone from './components/AppAlertDone.vue'
 import AppHeader from './components/AppHeader.vue'
 import LevelSelect from './components/LevelSelect.vue'
-import { isEmpty, map } from 'lodash-es'
-import { randomIntList } from './support/utils'
 import { Snackbar } from 'buefy/dist/components/snackbar'
 
 const PokeCards = () => import(/* webpackChunkName: "poke-cards" */ './components/PokeCards.vue')
@@ -49,74 +33,18 @@ export default {
     PokeCards,
     LevelSelect,
     AppHeader,
+    AppAlertDone,
+    AppAlertError,
     AppFooter
   },
-  data () {
-    return {
-      isLoading: true,
-      isRunning: false,
-      isDone: false,
-      error: '',
-      level: 6,
-      rawList: [],
-      indexes: []
-    }
-  },
   computed: {
-    hasError () {
-      return !isEmpty(this.error)
-    },
-    list () {
-      return map(this.indexes, index => {
-        return this.rawList[index]
-      })
-    }
-  },
-  watch: {
-    level () {
-      this.isRunning = false
-      this.isLoading = true
-
-      this.updateIndexes()
-
-      setTimeout(() => {
-        this.isRunning = true
-        this.isLoading = false
-      }, 1000)
-    }
+    ...mapState(['error', 'isLoading'])
   },
   methods: {
-    onDone () {
-      this.isRunning = false
-      this.isDone = true
-    },
-    updateIndexes () {
-      this.indexes = randomIntList(this.level, this.rawList.length - 1, 0)
-    },
-    loadData () {
-      this.isLoading = true
-      this.isRunning = false
-      this.isDone = false
-      this.error = ''
-
-      import(/* webpackChunkName: "pokemon-data" */'./assets/pokemon.json')
-        .then(module => Object.values(module))
-        .then(data => {
-          this.rawList = data
-          this.updateIndexes()
-          this.$nextTick(() => {
-            this.isLoading = false
-            this.isRunning = true
-          })
-        })
-        .catch((err) => {
-          this.error = err.message
-          this.isLoading = false
-        })
-    }
+    ...mapActions(['loadPokemon'])
   },
   mounted () {
-    this.loadData()
+    this.loadPokemon()
   },
   created () {
     document.addEventListener('sw:update', () => {
@@ -133,9 +61,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  #main {
-    /* margin-top: 10px; */
-  }
-</style>

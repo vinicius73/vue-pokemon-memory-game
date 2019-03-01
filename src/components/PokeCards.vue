@@ -7,13 +7,13 @@
       <div class="column is-hidden-mobile">
         <div class="is-pulled-right tags has-addons">
           <span class="tag is-dark">Pokémon</span>
-          <span class="tag is-info">{{ findingsIds.length }}/{{ pokemon.length }}</span>
+          <span class="tag is-info">{{ foundCount }}/{{ level }}</span>
         </div>
       </div>
     </div>
     <div
       class="columns is-mobile is-variable is-1"
-      v-for="(list, index) in lists"
+      v-for="(list, index) in pokeCardsLists"
       :key="`row-${index}`">
       <div
         class="column"
@@ -21,9 +21,8 @@
         :key="`column-${rowIndex}-${row.id}`">
         <PokeCard
           @select="onSelect"
-          :index="row.index"
-          :selecteds="selectedsKeys"
-          :findings="findingsIds"
+          :selecteds="selecteds"
+          :findings="found"
           :pokemon="row" />
       </div>
     </div>
@@ -32,112 +31,21 @@
 
 <script>
 import PokeCard from './PokeCard.vue'
-import { isMobile } from '../support/utils'
-import { getColsNumber } from '../support/grid'
-import { chunk, includes, map, find, size, toUpper, shuffle } from 'lodash-es'
-import { Snackbar } from 'buefy/dist/components/snackbar'
+import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
   name: 'PokeCards',
   components: { PokeCard },
-  data () {
-    return {
-      selectedsKeys: [],
-      findingsIds: []
-    }
-  },
-  props: {
-    pokemon: Array
-  },
   computed: {
-    rawList () {
-      const { pokemon } = this
-      return shuffle([...pokemon, ...pokemon])
-        .map((row, index) => {
-          return {
-            ...row,
-            index
-          }
-        })
-    },
-    lists () {
-      if (isMobile()) {
-        return chunk(this.rawList, 3)
-      }
-
-      const cols = getColsNumber(size(this.rawList))
-      return chunk(this.rawList, cols)
-    },
-    selecteds () {
-      return map(this.selectedsKeys, index => {
-        return find(this.rawList, row => {
-          return row.index === index
-        })
-      })
-    },
-    isDone () {
-      return size(this.findingsIds) === size(this.pokemon)
-    }
+    ...mapGetters(['pokeCardsLists', 'foundCount']),
+    ...mapState(['found', 'selecteds', 'level'])
   },
   watch: {
-    isDone: 'onDone',
-    pokemon: 'reset',
-    selecteds (values) {
-      if (size(values) === 2) {
-        const [pokeA, pokeB] = values
-
-        if (pokeA.id === pokeB.id) {
-          this.findingsIds = [...this.findingsIds, pokeA.id]
-
-          Snackbar.open({
-            position: 'is-top',
-            message: `You find ${toUpper(pokeA.identifier)}!`,
-            queue: false,
-            duration: 1000
-          })
-        } else {
-          Snackbar.open({
-            type: 'is-warning',
-            position: 'is-top',
-            message: 'Try again!',
-            queue: false,
-            duration: 1000
-          })
-        }
-
-        setTimeout(() => {
-          this.selectedsKeys = []
-        }, 400)
-      }
-    }
   },
   methods: {
-    reset () {
-      Object.assign(this, this.$options.data.call(this))
-    },
-    onDone (value) {
-      if (!value) {
-        return
-      }
-
-      this.$emit('done')
-    },
-    onSelect ({ id, index }) {
-      if (size(this.selectedsKeys) >= 2) {
-        return
-      }
-
-      if (includes(this.findingsIds, id)) {
-        return
-      }
-
-      const selecteds = [...this.selectedsKeys]
-
-      if (includes(selecteds, index)) {
-        return
-      }
-
-      this.selectedsKeys = [...selecteds, index]
+    ...mapActions(['selectPokeCard']),
+    onSelect (pokemon) {
+      this.selectPokeCard(pokemon)
     }
   }
 }

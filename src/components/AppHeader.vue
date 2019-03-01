@@ -16,7 +16,7 @@
             <span class="tag is-medium mono" :class="isRunning ? 'is-info' : 'is-black'">
               {{ timer | secToTimeStr(false) }}
             </span>
-            <a class="tag is-dark is-medium" title="Restart" @click="reload" v-if="isRunning">
+            <a class="tag is-dark is-medium" title="Restart" @click="loadPokemon" v-if="isRunning">
               <b-icon icon="reload" />
             </a>
           </div>
@@ -29,6 +29,7 @@
 <script>
 import { sample } from 'lodash-es'
 import { pokeApiSprite } from '../support/utils'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 const ids = [150, 25, 245, 6, 384, 94, 257, 658, 445, 742, 718, 319, 202, 725, 242, 748, 39]
 const getPokemon = () => sample(ids)
@@ -41,10 +42,12 @@ export default {
       timer: 0
     }
   },
-  props: {
-    isRunning: Boolean
-  },
   computed: {
+    ...mapState(['isRunning']),
+    ...mapGetters(['isDone']),
+    timerStatus () {
+      return this.isRunning && !this.isDone
+    },
     logo () {
       return pokeApiSprite(this.pokemon)
     }
@@ -56,7 +59,7 @@ export default {
           el.href = href
         })
     },
-    isRunning: {
+    timerStatus: {
       immediate: true,
       handler  (value) {
         value
@@ -66,6 +69,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['loadPokemon']),
     startTimer () {
       this.timer = 0
       this.$interval_timer = setInterval(() => {
@@ -74,9 +78,6 @@ export default {
     },
     stopTimer () {
       clearInterval(this.$interval_timer)
-    },
-    reload () {
-      this.$emit('call:reload')
     }
   },
   mounted () {

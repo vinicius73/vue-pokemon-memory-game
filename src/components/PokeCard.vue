@@ -16,7 +16,6 @@ export default {
   name: 'PokeCard',
   components: { ImageFlip },
   props: {
-    index: Number,
     selecteds: Array,
     findings: Array,
     pokemon: Object
@@ -32,7 +31,7 @@ export default {
       return includes(this.findings, this.pokemon.id)
     },
     placehold () {
-      const { index } = this
+      const { index } = this.pokemon
       if (index > 25) {
         const letter = index % 26
         const base = Math.floor(index / 26) - 1

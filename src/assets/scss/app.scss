@@ -28,7 +28,7 @@ $colors: map-merge($colors, $addColors);
 // 4. Provide custom buefy overrides and site styles here
 
 .card.is-spotlight {
-  box-shadow: 0 2px 3px rgba($red, 0.3), 0 0 0 1px rgba($red, 0.3)
+  box-shadow: 0 2px 3px rgba($blue, 0.3), 0 0 0 1px rgba($blue, 0.3)
 }
 
 .column {

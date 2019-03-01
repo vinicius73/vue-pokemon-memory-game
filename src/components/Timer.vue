@@ -10,7 +10,7 @@
       <b-icon icon="counter" />
     </span>
     <span class="tag is-medium mono is-black">
-      {{ score }}
+      {{ score | number }}
     </span>
     <a class="tag is-warning is-medium" title="Restart" @click="loadPokemon" v-if="isRunning">
       <b-icon icon="reload" />

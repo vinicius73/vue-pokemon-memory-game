@@ -1,4 +1,4 @@
-import { padStart, toInteger } from 'lodash-es'
+import { padStart, toInteger, toSafeInteger } from 'lodash-es'
 const padHour = (value) => padStart(value, 2, 0)
 
 const secToTimeStr = (val, showHour = true) => {
@@ -17,6 +17,11 @@ const secToTimeStr = (val, showHour = true) => {
   return result.join(':')
 }
 
+const numberFormat = value => {
+  return toSafeInteger(value).toLocaleString()
+}
+
 export function install (Vue) {
   Vue.filter('secToTimeStr', secToTimeStr)
+  Vue.filter('number', numberFormat)
 }

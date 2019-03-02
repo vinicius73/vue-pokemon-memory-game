@@ -9,14 +9,9 @@ const handler = new self.workbox.strategies.CacheFirst({
 })
 
 const matchFunction = ({ url }) => {
-  console.log(url.href, imgRgx.test(url.href))
   return imgRgx.test(url.href)
 }
 
-self.workbox.routing.registerRoute(
-  matchFunction,
-  handler
-)
 self.workbox.routing.registerRoute(
   matchFunction,
   handler

@@ -1,0 +1,2 @@
+# Redirect default Netlify subdomain to primary domain
+https://vue-pokemon-memory-game.netlify.com/* https://vue-pokemon-memory-game.vinicius73.dev/:splat 301!

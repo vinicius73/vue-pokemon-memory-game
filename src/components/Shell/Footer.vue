@@ -9,7 +9,11 @@
       </p>
       <p>
         <a href="https://github.com/vinicius73/vue-pokemon-memory-game" target="_blank">
-          <small>{{ $options.version }}</small>
+          <small>
+            v{{ $options.version }}
+          </small>
+          <br>
+          <b-icon size="small" type="is-link" icon="github-circle" />
         </a>
       </p>
     </div>

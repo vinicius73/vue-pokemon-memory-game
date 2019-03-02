@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{'is-mobile': isMobile}">
     <div class="container is-fluid">
       <ShellHeader />
 
@@ -34,7 +34,7 @@ export default {
     ...ShellComponents
   },
   computed: {
-    ...mapState(['error', 'isLoading']),
+    ...mapState(['error', 'isLoading', 'isMobile']),
     ...mapGetters(['isDone'])
   },
   watch: {

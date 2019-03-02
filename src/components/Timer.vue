@@ -1,15 +1,15 @@
 <template>
   <div class="tags has-addons">
-    <span class="tag is-medium" :class="isRunning ? 'is-dark' : 'is-black'">
+    <span class="tag is-medium" v-if="!isMobile" :class="isRunning ? 'is-dark' : 'is-black'">
       <b-icon icon="clock" />
     </span>
     <span class="tag is-medium mono" :class="isRunning ? 'is-dark' : 'is-black'">
       {{ timer | secToTimeStr(false) }}
     </span>
-    <span class="tag is-medium is-black">
+    <span class="tag is-medium is-black" v-if="!isMobile">
       <b-icon icon="counter" />
     </span>
-    <span class="tag is-medium mono is-black">
+    <span class="tag is-medium mono is-black" v-if="!isMobile">
       {{ score | number }}
     </span>
     <a class="tag is-warning is-medium" title="Restart" @click="loadPokemon" v-if="isRunning">
@@ -29,7 +29,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['isRunning', 'score']),
+    ...mapState(['isRunning', 'score', 'isMobile']),
     ...mapGetters(['isDone']),
     timerStatus () {
       return this.isRunning && !this.isDone

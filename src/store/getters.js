@@ -30,10 +30,10 @@ export default {
     })
   },
   // lists of pokemon list
-  pokeCardsLists: (state, { pokeCards }) => {
+  pokeCardsLists: ({ isMobile }, { pokeCards }) => {
     return chunk(
       pokeCards,
-      getColsNumber(size(pokeCards))
+      isMobile ? 3 : getColsNumber(size(pokeCards))
     )
   },
   // poke cards selected

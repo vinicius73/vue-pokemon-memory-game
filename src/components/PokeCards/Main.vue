@@ -1,18 +1,17 @@
 <template lang="html">
   <div class="poke-cards">
-    <div class="poke-cards--header columns">
-      <div class="column is-four-fifths">
+    <div class="poke-cards--header columns is-mobile is-variable is-1">
+      <div class="column">
         <slot />
       </div>
-      <div class="column is-hidden-mobile">
-        <!-- <div class="is-pulled-right tags has-addons">
-          <span class="tag is-dark">Pokémon</span>
-          <span class="tag is-info">{{ foundCount }}/{{ level }}</span>
-        </div> -->
-
-        <div class="field is-pulled-right">
-            <b-switch type="is-danger" :value="isEasyMode" @input="setIsEasyMode">
-                {{ isEasyMode ? 'Easy mode' : 'Normal mode' }}
+      <div class="column is-narrow">
+        <div class="field">
+            <b-switch
+              type="is-danger"
+              size="is-small"
+              :value="isEasyMode" @input="setIsEasyMode">
+                <span v-if="isMobile">{{ isEasyMode ? 'Easy' : 'Normal' }}</span>
+                <span v-else>{{ isEasyMode ? 'Easy mode' : 'Normal mode' }}</span>
             </b-switch>
         </div>
       </div>
@@ -56,7 +55,7 @@ export default {
   }),
   computed: {
     ...mapGetters(['pokeCardsLists', 'foundCount']),
-    ...mapState(['found', 'selecteds', 'level', 'isEasyMode'])
+    ...mapState(['found', 'selecteds', 'level', 'isEasyMode', 'isMobile'])
   },
   watch: {
     pokeCardsLists: 'bootstrap'
@@ -92,9 +91,12 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
   .poke-cards--header {
     margin-top: 10px;
     margin-bottom: 10px;
+    .field {
+      margin-top: 5px;
+    }
   }
 </style>

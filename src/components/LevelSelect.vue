@@ -18,7 +18,7 @@ export default {
   computed: {
     ...mapState(['level', 'isMobile']),
     levels () {
-      return makeLevels(6, this.isMobile ? 5 : 10)
+      return makeLevels(6, this.isMobile ? 4 : 10)
     }
   },
   methods: {

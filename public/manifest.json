@@ -1,6 +1,6 @@
 {
-  "name": "vue-poke-memo",
-  "short_name": "vue-poke-memo",
+  "name": "Pokémon - Memory Game",
+  "short_name": "Poke Memory Game",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",

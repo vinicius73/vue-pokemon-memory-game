@@ -1,5 +1,8 @@
 <template>
   <div class="buttons has-addons">
+    <button class="button" title="levels">
+      <b-icon icon="bullseye-arrow" />
+    </button>
     <a v-for="value in $options.levels" :key="value"
       class="button"
       @click="setLevel(value)">

@@ -5,7 +5,12 @@ self.workbox.precaching.precache([
 const imgRgx = new RegExp(/(https?:\/\/.*\.(?:png|jpg))/i)
 
 const handler = new self.workbox.strategies.CacheFirst({
-  cacheName: 'image-cache'
+  plugins: [
+    new self.workbox.cacheableResponse.Plugin({
+      statuses: [0, 200]
+    })
+  ],
+  cacheName: 'images'
 })
 
 const matchFunction = ({ url }) => {

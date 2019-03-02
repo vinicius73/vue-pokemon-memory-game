@@ -16,6 +16,12 @@
         </div>
       </div>
     </div>
+
+    <progress v-if="forceDisplay"
+      class="progress is-small is-danger"
+      :value="timer"
+      :max="visibleTimeout" />
+
     <div
       class="columns is-mobile is-variable is-1"
       v-for="(list, index) in pokeCardsLists"
@@ -37,7 +43,6 @@
 <script>
 import Card from './Card.vue'
 import { Toast } from 'buefy/dist/components/toast'
-import { throttle } from 'lodash-es'
 import { mapGetters, mapActions, mapState } from 'vuex'
 
 const getThemAll = () => {
@@ -51,34 +56,47 @@ export default {
   name: 'PokeCards',
   components: { Card },
   data: () => ({
-    forceDisplay: false
+    visibleTimeout: 0,
+    timer: 0
   }),
   computed: {
     ...mapGetters(['pokeCardsLists', 'foundCount']),
-    ...mapState(['found', 'selecteds', 'level', 'isEasyMode', 'isMobile'])
+    ...mapState(['found', 'selecteds', 'level', 'isEasyMode', 'isMobile']),
+    forceDisplay () {
+      return this.visibleTimeout > 0
+    }
   },
   watch: {
     pokeCardsLists: 'bootstrap'
   },
   methods: {
     ...mapActions(['selectPokeCard', 'setIsEasyMode']),
-    bootstrap: throttle(function bootstrap () {
-      this.forceDisplay = false
-      clearTimeout(this.$timeout)
+    startVisible (timeout) {
+      this.visibleTimeout = timeout
+      this.$interval = setInterval(() => {
+        this.timer++
+        if (this.timer >= timeout) {
+          this.stopVisible()
+          getThemAll()
+        }
+      }, 1000)
+    },
+    stopVisible () {
+      clearInterval(this.$interval)
+      this.visibleTimeout = 0
+      this.timer = 0
+    },
+    bootstrap () {
+      this.stopVisible()
 
       if (!this.isEasyMode) {
         return
       }
 
       this.$nextTick(() => {
-        this.forceDisplay = true
-
-        this.$timeout = setTimeout(() => {
-          getThemAll()
-          this.forceDisplay = false
-        }, (this.level / 2) * 1000)
+        this.startVisible(this.level / 2)
       })
-    }, 1500),
+    },
     onSelect (pokemon) {
       if (!this.forceDisplay) {
         this.selectPokeCard(pokemon)

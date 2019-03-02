@@ -1,4 +1,5 @@
 import * as mutations from './mutations.type'
+import { includes } from 'lodash-es'
 
 const loadPokemon = ({ commit }) => {
   commit(mutations.setIsLoading, true)
@@ -23,7 +24,13 @@ const loadPokemon = ({ commit }) => {
     })
 }
 
-const selectPokeCard = ({ commit }, pokemon) => {
+const selectPokeCard = ({ commit, state }, pokemon) => {
+  const { found, selecteds } = state
+
+  if (includes(found, pokemon.id) || includes(selecteds, pokemon.index)) {
+    return
+  }
+
   commit(mutations.addSelected, pokemon.index)
 }
 

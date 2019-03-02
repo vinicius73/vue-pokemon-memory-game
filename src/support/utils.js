@@ -24,4 +24,8 @@ const pokeApiSprite = id => {
 
 const isMobile = () => window.screen.width <= 699
 
-export { randomIntList, pokeDBSprite, pokeApiSprite, isMobile }
+const makeLevels = (base, length) => Array.from({ length }).map((_, index) => {
+  return base * (index + 1)
+})
+
+export { randomIntList, pokeDBSprite, pokeApiSprite, isMobile, makeLevels }

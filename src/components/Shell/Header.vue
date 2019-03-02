@@ -25,6 +25,7 @@ import { sample } from 'lodash-es'
 import { pokeApiSprite } from '../../support/utils'
 import { mapState } from 'vuex'
 import Timer from '../Timer.vue'
+import Visibility from 'visibilityjs'
 
 const ids = [150, 25, 245, 6, 384, 94, 257, 658, 445, 742, 718, 319, 202, 725, 242, 748, 39]
 const getPokemon = () => sample(ids)
@@ -55,12 +56,12 @@ export default {
     this.$headIcons = document.querySelectorAll('link[rel=icon')
   },
   mounted () {
-    this.$interval = setInterval(() => {
+    this.$interval = Visibility.every(10000, () => { // 10s
       this.pokemon = getPokemon()
-    }, 10000) // 10s
+    })
   },
   beforeDestroy () {
-    clearInterval(this.$interval)
+    Visibility.stop(this.$interval)
   }
 }
 </script>

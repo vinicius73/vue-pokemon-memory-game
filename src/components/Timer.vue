@@ -20,6 +20,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+import Visibility from 'visibilityjs'
 
 export default {
   name: 'Timer',
@@ -55,12 +56,12 @@ export default {
     }),
     startTimer () {
       this.timer = 0
-      this.$interval = setInterval(() => {
+      this.$interval = Visibility.every(1000, () => {
         this.timer++
-      }, 1000)
+      })
     },
     stopTimer () {
-      clearInterval(this.$interval)
+      Visibility.stop(this.$interval)
     }
   },
   beforeDestroy () {

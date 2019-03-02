@@ -1,6 +1,8 @@
 <template>
   <figure class="image is-1by1" :style="style">
-    <!--  -->
+    <div class="placehold" v-if="!visible">
+      <div>{{ placehold }}</div>
+    </div>
   </figure>
 </template>
 
@@ -18,9 +20,6 @@ export default {
     error: false
   }),
   computed: {
-    placeholdSrc () {
-      return `https://placehold.jp/ffffff/000000/172x172.png?text=${this.placehold}`
-    },
     src () {
       const { pokemon, error } = this
 
@@ -31,11 +30,12 @@ export default {
       return pokeDBSprite(pokemon.identifier)
     },
     style () {
-      const src = this.visible
-        ? this.src
-        : this.placeholdSrc
+      const { src, visible } = this
+      const image = visible
+        ? src
+        : '/img/1x1.png'
       return {
-        'background-image': `url(${src})`
+        'background-image': `url(${image})`
       }
     }
   },
@@ -58,5 +58,17 @@ export default {
   background-size: contain;
   background-position: center;
   transition: all .1s ease-in-out;
+  .placehold {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.5rem;
+  }
 }
 </style>

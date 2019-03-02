@@ -17,12 +17,14 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { ModalProgrammatic } from 'buefy/dist/components/modal'
+import { mapActions, mapState, mapGetters } from 'vuex'
 import { Snackbar } from 'buefy/dist/components/snackbar'
 import ShellComponents from './components/Shell'
 
 const LevelSelect = () => import(/* webpackChunkName: "level-select" */ './components/LevelSelect.vue')
 const PokeCards = () => import(/* webpackChunkName: "poke-cards" */ './components/PokeCards/Main.vue')
+const FinishModal = () => import(/* webpackChunkName: "finish-modal" */ './components/FinishModal.vue')
 
 export default {
   name: 'AppShell',
@@ -32,7 +34,19 @@ export default {
     ...ShellComponents
   },
   computed: {
-    ...mapState(['error', 'isLoading'])
+    ...mapState(['error', 'isLoading']),
+    ...mapGetters(['isDone'])
+  },
+  watch: {
+    isDone (value) {
+      if (value) {
+        ModalProgrammatic.open({
+          parent: this,
+          component: FinishModal,
+          hasModalCard: true
+        })
+      }
+    }
   },
   methods: {
     ...mapActions(['loadPokemon'])

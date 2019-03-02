@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'Timer',
@@ -36,6 +36,9 @@ export default {
     }
   },
   watch: {
+    timer (value) {
+      this.setTimer(value)
+    },
     timerStatus: {
       immediate: true,
       handler  (value) {
@@ -47,6 +50,9 @@ export default {
   },
   methods: {
     ...mapActions(['loadPokemon']),
+    ...mapMutations({
+      setTimer: 'set/timer'
+    }),
     startTimer () {
       this.timer = 0
       this.$interval = setInterval(() => {

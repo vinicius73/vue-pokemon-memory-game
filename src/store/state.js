@@ -3,6 +3,7 @@ import { isMobile } from '../support/utils'
 export default {
   level: 6,
   score: 0,
+  timer: 0,
   failures: 0,
   error: '',
   isRunning: false,

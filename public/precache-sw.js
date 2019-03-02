@@ -7,10 +7,10 @@ const handler = new self.workbox.strategies.CacheFirst({
 })
 
 self.workbox.routing.registerRoute(
-  new RegExp('\\.png$'),
+  new RegExp('.+\\.png$'),
   handler
 )
 self.workbox.routing.registerRoute(
-  new RegExp('\\.jpg$'),
+  new RegExp('.+\\.jpg$'),
   handler
 )

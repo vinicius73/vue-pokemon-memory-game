@@ -3,7 +3,7 @@
     <div class="card-image">
       <CardImage
         @click.native="onClick"
-        v-bind="{ pokemon, placehold, visible }" />
+        v-bind="{ pokemon, placehold, visible, found: isFound }" />
     </div>
   </div>
 </template>

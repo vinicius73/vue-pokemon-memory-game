@@ -3,6 +3,9 @@
     <div class="placehold" v-if="!visible">
       <div>{{ placehold }}</div>
     </div>
+    <div v-if="found" class="label fade-in">
+      {{ pokemon.identifier || pokemon.id }}
+    </div>
   </figure>
 </template>
 
@@ -14,6 +17,7 @@ export default {
   props: {
     pokemon: Object,
     visible: Boolean,
+    found: Boolean,
     placehold: String
   },
   data: () => ({
@@ -69,6 +73,17 @@ export default {
     flex-direction: column;
     text-align: center;
     font-size: 1.5rem;
+  }
+  .label {
+    text-transform: uppercase;
+    background-color: #ee151590;
+    color: #FFF;
+    font-family: monospace;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0
   }
 }
 </style>

@@ -16,7 +16,12 @@
             <b-icon icon="bullseye-arrow" />
           </span>
           <span class="tag is-black">Level</span>
-          <span class="tag is-warning">{{ levelCount }}</span>
+          <span class="tag is-warning">
+            {{ levelCount }}
+          </span>
+          <span v-if="isEasyMode" class="tag is-warning">
+            <b-icon icon="alpha-e" type="is-danger" />
+          </span>
         </div>
 
         <div class="tags has-addons are-large">
@@ -25,6 +30,10 @@
           </span>
           <span class="tag is-black">Score</span>
           <span class="tag is-link">{{ score | number }}</span>
+          <span class="tag is-link">
+            <b-icon icon="chart-line-variant" />
+          </span>
+          <span class="tag is-link">{{ scoreAvg | number }}</span>
         </div>
 
         <div class="tags has-addons are-large">
@@ -33,6 +42,10 @@
           </span>
           <span class="tag is-black">Time</span>
           <span class="tag is-info">{{ timer | secToTimeStr(false) }}</span>
+          <span class="tag is-info">
+            <b-icon icon="chart-line-variant" />
+          </span>
+          <span class="tag is-info">{{ timerAvg | number }}</span>
         </div>
       </div>
     </section>
@@ -48,7 +61,23 @@ export default {
   components: { Pokeball },
   computed: {
     ...mapGetters(['levelCount']),
-    ...mapState(['score', 'level', 'timer'])
+    ...mapState(['score', 'level', 'timer', 'isEasyMode']),
+    scoreAvg () {
+      const { level, score } = this
+      if (score <= 0 || level <= 0) {
+        return 0
+      }
+
+      return score / level
+    },
+    timerAvg () {
+      const { timer, score } = this
+      if (score <= 0 || timer <= 0) {
+        return 0
+      }
+
+      return score / timer
+    }
   },
   mounted () {
     if (!window.ga) {
@@ -61,7 +90,7 @@ export default {
       hitType: 'event',
       eventCategory: 'game',
       eventAction: 'finish',
-      eventLabel: `Finish level ${this.level}`,
+      eventLabel: `Finish level ${this.level * 2}`,
       eventValue: this.score,
       metric0: this.time,
       nonInteraction: true

@@ -17,8 +17,17 @@ const secToTimeStr = (val, showHour = true) => {
   return result.join(':')
 }
 
-const numberFormat = value => {
-  return toSafeInteger(value).toLocaleString()
+const getNavigatorLanguage = () => {
+  if (navigator.languages && navigator.languages.length) {
+    return navigator.languages[0]
+  }
+  return navigator.userLanguage || navigator.language || navigator.browserLanguage || 'en'
+}
+
+const defLanguage = getNavigatorLanguage()
+
+const numberFormat = (value, options = {}) => {
+  return toSafeInteger(value).toLocaleString(defLanguage, options)
 }
 
 export function install (Vue) {

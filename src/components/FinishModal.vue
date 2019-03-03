@@ -49,6 +49,21 @@ export default {
   computed: {
     ...mapGetters(['levelCount']),
     ...mapState(['score', 'level', 'timer'])
+  },
+  mounted () {
+    if (!window.ga) {
+      return
+    }
+
+    window.ga('send', {
+      hitType: 'event',
+      eventCategory: 'game',
+      eventAction: 'finish',
+      eventLabel: `Finish level ${this.level}`,
+      eventValue: this.score,
+      metricTime: this.time,
+      nonInteraction: true
+    })
   }
 }
 </script>

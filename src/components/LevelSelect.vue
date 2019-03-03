@@ -22,7 +22,23 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setLevel'])
+    ...mapActions(['setLevel']),
+    select (level) {
+      this.setLevel(level)
+
+      if (!window.ga) {
+        return
+      }
+
+      window.ga('send', {
+        hitType: 'event',
+        eventCategory: 'game',
+        eventAction: 'level_select',
+        eventLabel: `Select Level`,
+        eventValue: level * 2,
+        nonInteraction: true
+      })
+    }
   }
 }
 </script>

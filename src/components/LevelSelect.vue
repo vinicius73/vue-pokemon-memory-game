@@ -1,10 +1,15 @@
 <template>
-  <div class="buttons has-addons">
+  <div class="buttons has-addons" :class="{ 'are-small': isMobile }">
+    <a class="button is-outlined" v-if="isMobile" @click="loadPokemon">
+      <b-icon type="is-danger" size="small" icon="reload" />
+    </a>
     <a v-for="value in levels"
-      class="button is-outlined"
+      class="button"
+      :class="{ 'is-link': level===value }"
       :key="value"
       @click="setLevel(value)">
-      <span class="tag" :class="level===value ? 'is-link' : 'is-black' " >{{ value*2 }}</span>
+      <!-- <span class="tag is-small" :class="level===value ? 'is-link' : 'is-black' " >{{ value*2 }}</span> -->
+      <strong>{{ value * 2 }}</strong>
     </a>
   </div>
 </template>
@@ -22,7 +27,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setLevel']),
+    ...mapActions(['setLevel', 'loadPokemon']),
     select (level) {
       this.setLevel(level)
 

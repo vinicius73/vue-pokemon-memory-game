@@ -9,10 +9,10 @@
     <span class="tag is-medium is-black" v-if="!isMobile">
       <b-icon icon="counter" />
     </span>
-    <span class="tag is-medium mono is-black" v-if="!isMobile">
+    <span class="tag is-medium mono is-black">
       {{ score | number }}
     </span>
-    <a class="tag is-warning is-medium" title="Restart" @click="loadPokemon" v-if="isRunning">
+    <a class="tag is-warning is-medium" title="Restart" @click="loadPokemon" v-if="isRunning && !isMobile">
       <b-icon icon="reload" />
     </a>
   </div>

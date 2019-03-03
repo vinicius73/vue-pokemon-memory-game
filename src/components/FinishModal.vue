@@ -80,13 +80,9 @@ export default {
     }
   },
   mounted () {
-    if (!window.ga) {
-      return
-    }
+    this.$ga('set', 'dimension0', 'time')
 
-    window.ga('set', 'dimension0', 'time')
-
-    window.ga('send', {
+    this.$ga('send', {
       hitType: 'event',
       eventCategory: 'game',
       eventAction: 'finish',

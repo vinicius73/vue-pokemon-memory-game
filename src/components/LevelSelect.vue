@@ -26,11 +26,7 @@ export default {
     select (level) {
       this.setLevel(level)
 
-      if (!window.ga) {
-        return
-      }
-
-      window.ga('send', {
+      this.$ga('send', {
         hitType: 'event',
         eventCategory: 'game',
         eventAction: 'level_select',

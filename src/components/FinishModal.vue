@@ -55,13 +55,15 @@ export default {
       return
     }
 
+    window.ga('set', 'dimension0', 'time')
+
     window.ga('send', {
       hitType: 'event',
       eventCategory: 'game',
       eventAction: 'finish',
       eventLabel: `Finish level ${this.level}`,
       eventValue: this.score,
-      metricTime: this.time,
+      metric0: this.time,
       nonInteraction: true
     })
   }

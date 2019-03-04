@@ -9,8 +9,8 @@ const loadPokemon = ({ commit }) => {
   commit(mutations.resetFailures)
   commit(mutations.resetScore)
 
-  return import(/* webpackChunkName: "pokemon-data" */'../assets/pokemon.json')
-    .then(module => Object.values(module))
+  return fetch('/pokemon.json')
+    .then(response => response.json())
     .then(data => {
       commit(mutations.setError, '')
       commit(mutations.setPokemonRawList, [...data])

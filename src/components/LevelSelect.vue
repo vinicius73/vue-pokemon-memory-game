@@ -1,5 +1,5 @@
 <template>
-  <div class="buttons has-addons" :class="{ 'are-small': isMobile }">
+  <div class="buttons has-addons">
     <a class="button is-outlined" v-if="isMobile" @click="loadPokemon">
       <b-icon type="is-danger" size="small" icon="reload" />
     </a>

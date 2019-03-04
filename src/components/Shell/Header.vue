@@ -27,15 +27,15 @@ import { mapState } from 'vuex'
 import Timer from '../Timer.vue'
 import Visibility from 'visibilityjs'
 
-const ids = [150, 25, 245, 6, 384, 94, 257, 658, 445, 742, 718, 319, 202, 725, 242, 748, 39]
-const getPokemon = () => sample(ids)
+// const getPokemon = () => sample(ids)
 
 export default {
   name: 'ShellHeader',
   components: { Timer },
   data () {
     return {
-      pokemon: getPokemon()
+      ids: [],
+      pokemon: 150
     }
   },
   computed: {
@@ -52,13 +52,28 @@ export default {
         })
     }
   },
+  methods: {
+    loadIds () {
+      return fetch('/logos.json')
+        .then(response => response.json())
+        .then(ids => {
+          this.ids = ids
+        })
+    },
+    changeLogo () {
+      this.pokemon = sample(this.ids)
+    }
+  },
   created () {
     this.$headIcons = document.querySelectorAll('link[rel=icon')
   },
   mounted () {
-    this.$interval = Visibility.every(10000, () => { // 10s
-      this.pokemon = getPokemon()
-    })
+    this.loadIds()
+      .then(() => {
+        this.$interval = Visibility.every(10000, () => { // 10s
+          this.changeLogo()
+        })
+      })
   },
   beforeDestroy () {
     Visibility.stop(this.$interval)

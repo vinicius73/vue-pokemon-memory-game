@@ -1,6 +1,8 @@
 <template>
   <div class="buttons has-addons">
-    <a class="button is-outlined" v-if="isMobile" @click="loadPokemon">
+    <a v-if="isMobile"
+      class="button is-outlined"
+      @click="loadPokemon">
       <b-icon type="is-danger" size="small" icon="reload" />
     </a>
     <a v-for="value in levels"
@@ -8,7 +10,6 @@
       :class="{ 'is-link': level===value }"
       :key="value"
       @click="setLevel(value)">
-      <!-- <span class="tag is-small" :class="level===value ? 'is-link' : 'is-black' " >{{ value*2 }}</span> -->
       <strong>{{ value * 2 }}</strong>
     </a>
   </div>

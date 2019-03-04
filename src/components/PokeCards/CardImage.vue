@@ -1,10 +1,13 @@
 <template>
-  <figure class="image is-1by1" :style="style">
+  <figure class="image is-1by1"
+    :style="style"
+    :class="{ 'has-background-warning error': visible && error }">
     <div class="placehold" v-if="!visible">
       <div>{{ placehold }}</div>
     </div>
-    <div v-if="found" class="label fade-in">
-      {{ pokemon.identifier || pokemon.id }}
+    <div v-if="found || (visible && error)"
+      class="label fade-in">
+      <div>{{ pokemon.identifier || pokemon.id }}</div>
     </div>
   </figure>
 </template>
@@ -21,23 +24,23 @@ export default {
     placehold: String
   },
   data: () => ({
-    error: false
+    error: true
   }),
   computed: {
     src () {
-      const { pokemon, error } = this
-
-      if (error) {
-        return `https://placehold.jp/ffffff/ff0000/172x172.png?text=${pokemon.identifier}`
-      }
-
-      return pokeDBSprite(pokemon.identifier)
+      return pokeDBSprite(this.pokemon.identifier)
     },
     style () {
-      const { src, visible } = this
+      const { src, visible, error } = this
+
+      if (error) {
+        return {}
+      }
+
       const image = visible
         ? src
         : '/img/1x1.png'
+
       return {
         'background-image': `url(${image})`
       }
@@ -48,6 +51,10 @@ export default {
 
     im.onerror = () => {
       this.error = true
+    }
+
+    im.onload = () => {
+      this.error = false
     }
 
     im.src = this.src
@@ -62,6 +69,11 @@ export default {
   background-size: contain;
   background-position: center;
   transition: all .1s ease-in-out;
+  &.error {
+    .label {
+      background-color: #000;
+    }
+  }
   .placehold {
     position: absolute;
     left: 0;
@@ -75,6 +87,7 @@ export default {
     font-size: 1.5rem;
   }
   .label {
+    padding: 0.3rem 0;
     text-transform: uppercase;
     background-color: #ee151590;
     color: #FFF;

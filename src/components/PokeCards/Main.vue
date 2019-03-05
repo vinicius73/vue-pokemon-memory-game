@@ -6,13 +6,20 @@
       </div>
       <div class="column is-narrow">
         <div class="field">
-            <b-switch
-              type="is-danger"
-              size="is-small"
-              :value="isEasyMode" @input="setIsEasyMode">
-                <span v-if="isMobile">{{ isEasyMode ? 'Easy' : 'Normal' }}</span>
-                <span v-else>{{ isEasyMode ? 'Easy mode' : 'Normal mode' }}</span>
-            </b-switch>
+            <div class="buttons has-addons">
+              <button @click="toggleEasyMode"
+                title="easy mode"
+                class="button"
+                :class="{ 'is-link': isEasyMode }">
+                <b-icon icon="baby-buggy" />
+              </button>
+              <button @click="toggleRouletteMode"
+                title="roulette mode"
+                class="button"
+                :class="{ 'is-link': isRouletteMode }">
+                <b-icon icon="shuffle-variant" />
+              </button>
+            </div>
         </div>
       </div>
     </div>
@@ -61,7 +68,7 @@ export default {
   }),
   computed: {
     ...mapGetters(['pokeCardsLists', 'foundCount']),
-    ...mapState(['found', 'selecteds', 'level', 'isEasyMode', 'isMobile']),
+    ...mapState(['found', 'selecteds', 'level', 'isEasyMode', 'isMobile', 'isRouletteMode']),
     forceDisplay () {
       return this.visibleTimeout > 0
     }
@@ -70,7 +77,13 @@ export default {
     pokeCardsLists: 'bootstrap'
   },
   methods: {
-    ...mapActions(['selectPokeCard', 'setIsEasyMode']),
+    ...mapActions(['selectPokeCard', 'setIsEasyMode', 'setIsRouletteMode']),
+    toggleEasyMode () {
+      this.setIsEasyMode(!this.isEasyMode)
+    },
+    toggleRouletteMode () {
+      this.setIsRouletteMode(!this.isRouletteMode)
+    },
     startVisible (timeout) {
       this.visibleTimeout = timeout
       this.$interval = setInterval(() => {
@@ -114,7 +127,7 @@ export default {
     margin-top: 10px;
     margin-bottom: 10px;
     .field {
-      margin-top: 5px;
+      // margin-top: 5px;
     }
   }
 </style>

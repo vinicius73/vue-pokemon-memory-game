@@ -20,7 +20,10 @@
             {{ levelCount }}
           </span>
           <span v-if="isEasyMode" class="tag is-warning">
-            <b-icon icon="alpha-e" type="is-danger" />
+            <b-icon icon="alpha-e-box-outline" type="is-danger" />
+          </span>
+          <span v-if="isRouletteMode" class="tag is-warning">
+            <b-icon icon="shuffle-variant" type="is-danger" />
           </span>
         </div>
 
@@ -61,7 +64,7 @@ export default {
   components: { Pokeball },
   computed: {
     ...mapGetters(['levelCount']),
-    ...mapState(['score', 'level', 'timer', 'isEasyMode']),
+    ...mapState(['score', 'level', 'timer', 'isEasyMode', 'isRouletteMode']),
     scoreAvg () {
       const { level, score } = this
       if (score <= 0 || level <= 0) {

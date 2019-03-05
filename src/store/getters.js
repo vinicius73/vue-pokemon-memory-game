@@ -19,12 +19,13 @@ export default {
     return map(indexes, index => pokemonRawList[index])
   },
   // list of pokecards
-  pokeCards: (state, { pokemon }) => {
+  pokeCards: ({ shuffleCount }, { pokemon }) => {
     const list = shuffle([...pokemon, ...pokemon])
 
     return map(list, (row, index) => {
       return {
         ...row,
+        shuffleCount, // only to force update of the list.
         index
       }
     })
@@ -59,10 +60,12 @@ export default {
 
     return false
   },
-  baseScore: ({ level, isEasyMode }) => {
-    const base = level * level
+  baseScore: ({ level, isEasyMode, isRouletteMode }) => {
+    const factor = isRouletteMode ? 3 : 2
+    const base = Math.pow(level, factor)
+
     return isEasyMode
-      ? Math.floor(base / 2)
+      ? Math.floor(base / factor)
       : base
   },
   nextScoreIncrement: ({ level, failures }, { baseScore }) => {

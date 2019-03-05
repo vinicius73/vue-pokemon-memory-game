@@ -1,6 +1,8 @@
 export const setError = 'set/error'
 export const setLevel = 'set/level'
 export const setTimer = 'set/timer'
+export const setShuffleCount = 'set/shuffleCount'
+export const setIsRouletteMode = 'set/isRouletteMode'
 export const setIsEasyMode = 'set/isEasyMode'
 export const setIsRunning = 'set/isRunning'
 export const setIsLoading = 'set/isLoading'

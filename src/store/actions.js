@@ -46,6 +46,12 @@ const setIsEasyMode = ({ commit, dispatch }, value) => {
   return dispatch('loadPokemon')
 }
 
+const setIsRouletteMode = ({ commit, dispatch }, value) => {
+  commit(mutations.setIsRouletteMode, value)
+
+  return dispatch('loadPokemon')
+}
+
 const addFound = ({ commit, state, getters }, id) => {
   const { nextScoreIncrement } = getters
 
@@ -54,4 +60,4 @@ const addFound = ({ commit, state, getters }, id) => {
   commit(mutations.resetFailures)
 }
 
-export default { loadPokemon, selectPokeCard, setLevel, addFound, setIsEasyMode }
+export default { loadPokemon, selectPokeCard, setLevel, addFound, setIsEasyMode, setIsRouletteMode }

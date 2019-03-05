@@ -43,7 +43,8 @@ export default {
         ModalProgrammatic.open({
           parent: this,
           component: FinishModal,
-          hasModalCard: true
+          hasModalCard: true,
+          canCancel: !this.isMobile
         })
       }
     }

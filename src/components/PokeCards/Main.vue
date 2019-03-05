@@ -6,20 +6,20 @@
       </div>
       <div class="column is-narrow">
         <div class="field">
-            <div class="buttons has-addons">
-              <button @click="toggleEasyMode"
-                title="easy mode"
-                class="button"
-                :class="{ 'is-link': isEasyMode }">
-                <b-icon icon="baby-buggy" />
-              </button>
-              <button @click="toggleRouletteMode"
-                title="roulette mode"
-                class="button"
-                :class="{ 'is-link': isRouletteMode }">
-                <b-icon icon="shuffle-variant" />
-              </button>
-            </div>
+          <div class="buttons has-addons">
+            <button @click="toggleEasyMode"
+              title="easy mode"
+              class="button"
+              :class="{ 'is-link': isEasyMode }">
+              <b-icon icon="baby-buggy" />
+            </button>
+            <button @click="toggleRouletteMode"
+              title="roulette mode"
+              class="button"
+              :class="{ 'is-link': isRouletteMode }">
+              <b-icon icon="shuffle-variant" />
+            </button>
+          </div>
         </div>
       </div>
     </div>

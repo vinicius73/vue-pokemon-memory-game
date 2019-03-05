@@ -20,6 +20,12 @@
               <b-icon icon="shuffle-variant" />
             </button>
           </div>
+          <button @click="showInformations"
+            v-if="!isMobile"
+            title="informations"
+            class="button is-link is-inverted" >
+            <b-icon type="is-warning" icon="information" />
+          </button>
         </div>
       </div>
     </div>
@@ -49,6 +55,8 @@
 
 <script>
 import Card from './Card.vue'
+import InformationsModal from '../InformationsModal.vue'
+import { ModalProgrammatic } from 'buefy/dist/components/modal'
 import { Toast } from 'buefy/dist/components/toast'
 import { mapGetters, mapActions, mapState } from 'vuex'
 
@@ -100,6 +108,14 @@ export default {
       this.visibleTimeout = 0
       this.timer = 0
     },
+    showInformations () {
+      ModalProgrammatic.open({
+        parent: this,
+        component: InformationsModal,
+        hasModalCard: true,
+        canCancel: !this.isMobile
+      })
+    },
     bootstrap () {
       this.stopVisible()
 
@@ -135,10 +151,20 @@ export default {
 
 <style lang="scss">
   .poke-cards--header {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 0 !important;
+    .buttons {
+      margin: 0 !important;
+    }
+    > .column {
+      // line-height: 0.5rem !important;
+    }
     .field {
-      // margin-top: 5px;
+      display: flex;
+      align-items: rigth;
+      > button {
+        margin-left: 5px;
+      }
     }
   }
 </style>

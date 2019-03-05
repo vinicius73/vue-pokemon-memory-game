@@ -11,7 +11,7 @@
       <hr />
 
       <div class="control">
-        <div class="tags has-addons are-large">
+        <div class="tags has-addons are-medium">
           <span class="tag is-black">
             <b-icon icon="bullseye-arrow" />
           </span>
@@ -27,7 +27,7 @@
           </span>
         </div>
 
-        <div class="tags has-addons are-large">
+        <div class="tags has-addons are-medium">
           <span class="tag is-black">
             <b-icon icon="counter" />
           </span>
@@ -39,7 +39,7 @@
           <span class="tag is-link">{{ scoreAvg | number }}</span>
         </div>
 
-        <div class="tags has-addons are-large">
+        <div class="tags has-addons are-medium">
           <span class="tag is-black">
             <b-icon icon="clock" />
           </span>

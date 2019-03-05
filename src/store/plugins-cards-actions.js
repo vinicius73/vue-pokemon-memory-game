@@ -39,7 +39,7 @@ const cardsActionsPlugin = store => {
         setTimeout(() => {
           store.commit(mutations.setShuffleCount, Math.random() * 100)
           store.commit(mutations.setIsLoading, false)
-        }, 1000)
+        }, 500)
       }
     }
   )

@@ -14,13 +14,16 @@ const loadPokemon = ({ commit }) => {
     .then(data => {
       commit(mutations.setError, '')
       commit(mutations.setPokemonRawList, [...data])
-      commit(mutations.setIsRunning, true)
+      return new Promise(resolve => {
+        setTimeout(() => {
+          commit(mutations.setIsRunning, true)
+          commit(mutations.setIsLoading, false)
+        }, 500)
+      })
     })
     .catch(err => {
-      commit(mutations.setError, err.message)
-    })
-    .then(() => {
       commit(mutations.setIsLoading, false)
+      commit(mutations.setError, err.message)
     })
 }
 

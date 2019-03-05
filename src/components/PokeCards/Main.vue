@@ -86,6 +86,7 @@ export default {
     },
     startVisible (timeout) {
       this.visibleTimeout = timeout
+
       this.$interval = setInterval(() => {
         this.timer++
         if (this.timer >= timeout) {
@@ -107,7 +108,17 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.startVisible(this.level / 2)
+        const { isRouletteMode, foundCount, level } = this
+
+        if (isRouletteMode && foundCount > 0) {
+          const rest = Math.floor((level - foundCount) / 2)
+          if (rest > 1) {
+            this.startVisible(rest)
+          }
+          return
+        }
+
+        this.startVisible(level / 2)
       })
     },
     onSelect (pokemon) {

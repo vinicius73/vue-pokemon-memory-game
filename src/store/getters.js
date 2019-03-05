@@ -1,6 +1,6 @@
 import { size, map, chunk, shuffle, find } from 'lodash-es'
 import { randomIntList, makeLevels } from '../support/utils'
-import { getColsNumber } from '../support/grid'
+import { getColsNumber, getColsMobileNumber } from '../support/grid'
 
 export default {
   // count all pokemon
@@ -35,9 +35,10 @@ export default {
   },
   // lists of pokemon list
   pokeCardsLists: ({ isMobile }, { pokeCards }) => {
+    const len = size(pokeCards)
     return chunk(
       pokeCards,
-      isMobile ? 3 : getColsNumber(size(pokeCards))
+      isMobile ? getColsMobileNumber(len) : getColsNumber(len)
     )
   },
   // poke cards selected

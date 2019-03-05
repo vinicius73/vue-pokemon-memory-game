@@ -18,4 +18,9 @@ const getColsNumber = cond([
   [stubTrue, constant(6)]
 ])
 
-export { getColsNumber }
+const getColsMobileNumber = cond([
+  [val => gte(val, 24), constant(4)],
+  [stubTrue, constant(3)]
+])
+
+export { getColsNumber, getColsMobileNumber }

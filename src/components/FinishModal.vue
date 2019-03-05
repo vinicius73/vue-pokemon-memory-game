@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-card" style="width: 350px" ref="root">
+  <div class="modal-card" style="max-width: 400px" ref="root">
     <header class="modal-card-head has-background-danger">
       <p class="modal-card-title has-text-light">You got them all!!</p>
     </header>
@@ -52,12 +52,17 @@
         </div>
       </div>
     </section>
+    <footer class="modal-card-foot">
+      <button class="button" type="button" @click="reload">
+        <b-icon icon="reload" /> <span>Restart</span>
+      </button>
+    </footer>
   </div>
 </template>
 
 <script>
 import Pokeball from './Pokeball.vue'
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'FinishModal',
@@ -82,6 +87,15 @@ export default {
       return score / timer
     }
   },
+  methods: {
+    ...mapActions(['loadPokemon']),
+    reload () {
+      this.loadPokemon()
+      this.$nextTick(() => {
+        this.$parent.close()
+      })
+    }
+  },
   mounted () {
     this.$ga('set', 'dimension0', 'time')
 
@@ -99,12 +113,17 @@ export default {
 </script>
 
 <style scoped>
+  h3 {
+    font-size: 1.5rem;
+  }
   .modal-card-title, h3 {
     text-align: center;
     font-family: monospace;
     font-weight: bold;
   }
-  h3 {
-    font-size: 1.5rem;
+  .modal-card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>

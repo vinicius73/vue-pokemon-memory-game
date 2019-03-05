@@ -1,5 +1,6 @@
 <template>
   <div class="buttons has-addons">
+    <slot />
     <a v-if="isMobile"
       class="button is-outlined"
       @click="loadPokemon">
@@ -16,16 +17,13 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
-import { makeLevels } from '../support/utils'
+import { mapActions, mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'LevelSelect',
   computed: {
     ...mapState(['level', 'isMobile']),
-    levels () {
-      return makeLevels(6, this.isMobile ? 4 : 10)
-    }
+    ...mapGetters(['levels'])
   },
   methods: {
     ...mapActions(['setLevel', 'loadPokemon']),

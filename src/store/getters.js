@@ -1,5 +1,5 @@
 import { size, map, chunk, shuffle, find } from 'lodash-es'
-import { randomIntList } from '../support/utils'
+import { randomIntList, makeLevels } from '../support/utils'
 import { getColsNumber } from '../support/grid'
 
 export default {
@@ -9,6 +9,9 @@ export default {
   levelCount: ({ level }) => level * 2,
   // number of pokemon found
   foundCount: ({ found }) => size(found),
+  levels: ({ isMobile }) => {
+    return makeLevels(6, isMobile ? 4 : 10)
+  },
   // random pokemon pokemon list
   pokemon: ({ level, pokemonRawList }, { pokemonRawCount }) => {
     if (pokemonRawCount <= 0) {

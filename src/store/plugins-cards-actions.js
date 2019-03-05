@@ -24,6 +24,20 @@ const cardsActionsPlugin = store => {
     store.dispatch('addFound', id)
   }
 
+  store.watch(
+    ({ pokemonRawList, isMobile, shuffleCount }) => ({ pokemonRawList, isMobile, shuffleCount }),
+    ({ isMobile }) => {
+      if (isMobile) {
+        setTimeout(() => {
+          const el = document.querySelector('#main')
+          if (el) {
+            el.scrollIntoView()
+          }
+        })
+      }
+    }
+  )
+
   // roulette mode
   store.watch(
     ({ level, isRouletteMode }, { foundCount }) => ({ level, foundCount, isRouletteMode }),

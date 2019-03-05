@@ -65,7 +65,7 @@ export default {
     const base = Math.pow(level, factor)
 
     return isEasyMode
-      ? Math.floor(base / factor)
+      ? Math.floor(base * (isRouletteMode ? 0.25 : 0.50))
       : base
   },
   nextScoreIncrement: ({ level, failures }, { baseScore }) => {

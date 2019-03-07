@@ -6,11 +6,11 @@
     <section class="modal-card-body">
       <Pokeball />
 
-      <h3>Pokémon - Memory Game</h3>
+      <div class="control canvas-content" ref="content">
+        <img class="only-canvas" src="img/8bits-coach.png">
+        <h3>Pokémon - Memory Game</h3>
+        <hr />
 
-      <hr />
-
-      <div class="control">
         <div class="tags has-addons are-medium">
           <span class="tag is-black">
             <b-icon icon="bullseye-arrow" />
@@ -50,11 +50,17 @@
           </span>
           <span class="tag is-info">{{ timerAvg | number }}</span>
         </div>
+        <div class="only-canvas has-text-link">
+          <center>bit.ly/pokemon-memory</center>
+        </div>
       </div>
     </section>
     <footer class="modal-card-foot">
       <button class="button" type="button" @click="reload">
         <b-icon icon="reload" /> <span>Restart</span>
+      </button>
+      <button class="button" type="button" @click="save">
+        <b-icon icon="download" />
       </button>
     </footer>
   </div>
@@ -64,6 +70,8 @@
 import Pokeball from './Pokeball.vue'
 import { filter } from 'lodash-es'
 import { mapState, mapGetters, mapActions } from 'vuex'
+import html2canvas from 'html2canvas'
+import download from 'downloadjs'
 
 export default {
   name: 'FinishModal',
@@ -71,6 +79,16 @@ export default {
   computed: {
     ...mapGetters(['levelCount']),
     ...mapState(['score', 'level', 'timer', 'isEasyMode', 'isRouletteMode']),
+    levelLabel () {
+      return this.level * 2
+    },
+    gameMode () {
+      return filter([
+        this.isEasyMode ? 'easy' : 'normal',
+        this.isRouletteMode ? 'roulette' : ''
+      ], val => !!val)
+        .join('-')
+    },
     scoreAvg () {
       const { level, score } = this
       if (score <= 0 || level <= 0) {
@@ -95,6 +113,22 @@ export default {
       this.$nextTick(() => {
         this.$parent.close()
       })
+    },
+    async save () {
+      const { levelLabel, gameMode, score } = this
+      const imageName = `pokemon-memory-game-${levelLabel}-${gameMode}-${score}.jpg`
+      const el = this.$refs.content
+      const canvas = await html2canvas(el, {
+        logging: false,
+        onclone: doc => {
+          doc.querySelector('.canvas-content')
+            .classList.add('canvas')
+        }
+      })
+
+      const data = canvas.toDataURL('image/jpeg', 1.0)
+
+      download(data, imageName, 'image/jpeg')
     }
   },
   mounted () {
@@ -106,17 +140,12 @@ export default {
     this.$ga('set', 'metric1', 'easy mode')
     this.$ga('set', 'metric2', 'roulette mode')
 
-    const { isEasyMode, level, score, time, isRouletteMode } = this
-
-    const mode = filter([
-      isEasyMode ? 'easy' : 'normal',
-      isRouletteMode ? 'roulette' : ''
-    ], val => !!val)
+    const { isEasyMode, level, score, time, isRouletteMode, gameMode } = this
 
     this.$ga('send', {
       hitType: 'event',
       eventCategory: 'game',
-      eventAction: `finish-${mode}`,
+      eventAction: `finish-${gameMode}`,
       eventLabel: `Finish level ${level * 2}`,
       eventValue: score,
       metric0: time,
@@ -129,6 +158,12 @@ export default {
 </script>
 
 <style scoped>
+  .only-canvas {
+    display: none;
+  }
+  .canvas .only-canvas {
+    display: block;
+  }
   h3 {
     font-size: 1.5rem;
   }

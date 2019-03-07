@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "buefy": "^0.7.2",
+    "downloadjs": "^1.4.7",
+    "html2canvas": "^1.0.0-alpha.12",
     "lodash-es": "^4.17.11",
     "register-service-worker": "^1.5.2",
     "visibilityjs": "^2.0.2",

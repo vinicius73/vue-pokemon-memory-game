@@ -62,6 +62,7 @@
 
 <script>
 import Pokeball from './Pokeball.vue'
+import { filter } from 'lodash-es'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -98,14 +99,29 @@ export default {
   },
   mounted () {
     this.$ga('set', 'dimension0', 'time')
+    this.$ga('set', 'dimension1', 'easy mode')
+    this.$ga('set', 'dimension2', 'roulette mode')
+
+    this.$ga('set', 'metric0', 'time')
+    this.$ga('set', 'metric1', 'easy mode')
+    this.$ga('set', 'metric2', 'roulette mode')
+
+    const { isEasyMode, level, score, time, isRouletteMode } = this
+
+    const mode = filter([
+      isEasyMode ? 'easy' : 'normal',
+      isRouletteMode ? 'roulette' : ''
+    ], val => !!val)
 
     this.$ga('send', {
       hitType: 'event',
       eventCategory: 'game',
-      eventAction: 'finish',
-      eventLabel: `Finish level ${this.level * 2}`,
-      eventValue: this.score,
-      metric0: this.time,
+      eventAction: `finish-${mode}`,
+      eventLabel: `Finish level ${level * 2}`,
+      eventValue: score,
+      metric0: time,
+      metric1: isEasyMode ? 1 : 0,
+      metric2: isRouletteMode ? 1 : 0,
       nonInteraction: true
     })
   }

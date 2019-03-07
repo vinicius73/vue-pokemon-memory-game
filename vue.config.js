@@ -8,8 +8,20 @@ module.exports = {
     optimization: {
       splitChunks: {
         cacheGroups: {
+          html2canvas: {
+            priority: 9,
+            test: /\/html2canvas/,
+            name: 'html2canvas',
+            chunks: 'all'
+          },
+          downloadjs: {
+            priority: 8,
+            test: /\/downloadjs/,
+            name: 'buefy',
+            chunks: 'all'
+          },
           buefy: {
-            priority: 5,
+            priority: 7,
             test: /\/buefy/,
             name: 'buefy',
             chunks: 'all'

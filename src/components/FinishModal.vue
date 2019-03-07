@@ -69,7 +69,8 @@
 <script>
 import Pokeball from './Pokeball.vue'
 import { filter } from 'lodash-es'
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+import { Toast } from 'buefy/dist/components/toast'
 import html2canvas from 'html2canvas'
 import download from 'downloadjs'
 
@@ -108,6 +109,9 @@ export default {
   },
   methods: {
     ...mapActions(['loadPokemon']),
+    ...mapMutations({
+      setLoading: 'set/isLoading'
+    }),
     reload () {
       this.loadPokemon()
       this.$nextTick(() => {
@@ -116,19 +120,39 @@ export default {
     },
     async save () {
       const { levelLabel, gameMode, score } = this
+
+      this.setLoading(true)
+
       const imageName = `pokemon-memory-game-${levelLabel}-${gameMode}-${score}.jpg`
-      const el = this.$refs.content
-      const canvas = await html2canvas(el, {
-        logging: false,
-        onclone: doc => {
-          doc.querySelector('.canvas-content')
-            .classList.add('canvas')
-        }
-      })
+      try {
+        const canvas = await html2canvas(this.$refs.content, {
+          logging: false,
+          onclone: doc => {
+            doc.querySelector('.canvas-content')
+              .classList.add('canvas')
+          }
+        })
 
-      const data = canvas.toDataURL('image/jpeg', 1.0)
+        const data = canvas.toDataURL('image/jpeg', 1.0)
 
-      download(data, imageName, 'image/jpeg')
+        download(data, imageName, 'image/jpeg')
+
+        Toast.open({
+          type: 'is-link',
+          message: 'Use this image to share your result as a pokémon trainer!',
+          duration: 3000
+        })
+      } catch (e) {
+        console.error(e) // eslint-disable-line
+        Toast.open({
+          type: 'is-danger',
+          message: 'There was a failure :('
+        })
+      } finally {
+        setTimeout(() => {
+          this.setLoading(false)
+        }, 500)
+      }
     }
   },
   mounted () {
@@ -163,6 +187,9 @@ export default {
   }
   .canvas .only-canvas {
     display: block;
+  }
+  .canvas .tags {
+    padding: 0 0.5em;
   }
   h3 {
     font-size: 1.5rem;

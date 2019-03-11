@@ -8,9 +8,10 @@ module.exports = {
   transform: {
     '^.+\\.vue$': 'vue-jest',
     '.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
-    '^.+\\.jsx?$': 'babel-jest'
+    '^.+\\.(jsx|js)$': 'babel-jest'
   },
   moduleNameMapper: {
+    '^lodash-es$': 'lodash',
     '^@/(.*)$': '<rootDir>/src/$1'
   },
   snapshotSerializers: [

@@ -1,18 +1,18 @@
 <template>
   <div class="tags has-addons">
-    <span class="tag is-medium" v-if="!isMobile" :class="isRunning ? 'is-dark' : 'is-black'">
+    <span class="tag is-medium --icon-clock" v-if="!isMobile" :class="isRunning ? 'is-dark' : 'is-black'">
       <b-icon icon="clock" />
     </span>
     <span class="tag is-medium mono" :class="isRunning ? 'is-dark' : 'is-black'">
       {{ timer | secToTimeStr(false) }}
     </span>
-    <span class="tag is-medium is-black" v-if="!isMobile">
+    <span class="tag is-medium is-black --icon-counter" v-if="!isMobile">
       <b-icon icon="counter" />
     </span>
     <span class="tag is-medium mono is-black">
       {{ score | number }}
     </span>
-    <a class="tag is-warning is-medium" ref="reloadBtn" title="Restart" @click="loadPokemon" v-if="isRunning && !isMobile">
+    <a class="tag is-warning is-medium --btn-reload" title="Restart" @click="loadPokemon" v-if="isRunning && !isMobile">
       <b-icon icon="reload" />
     </a>
   </div>

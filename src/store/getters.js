@@ -12,6 +12,9 @@ export default {
   levels: ({ isMobile }) => {
     return makeLevels(6, isMobile ? 4 : 10)
   },
+  timerStatus: ({ isRunning }, { isDone }) => {
+    return isRunning && !isDone
+  },
   // random pokemon pokemon list
   pokemon: ({ level, pokemonRawList }, { pokemonRawCount }) => {
     if (pokemonRawCount <= 0) {

@@ -12,7 +12,7 @@
     <span class="tag is-medium mono is-black">
       {{ score | number }}
     </span>
-    <a class="tag is-warning is-medium" title="Restart" @click="loadPokemon" v-if="isRunning && !isMobile">
+    <a class="tag is-warning is-medium" ref="reloadBtn" title="Restart" @click="loadPokemon" v-if="isRunning && !isMobile">
       <b-icon icon="reload" />
     </a>
   </div>
@@ -24,22 +24,11 @@ import Visibility from 'visibilityjs'
 
 export default {
   name: 'Timer',
-  data () {
-    return {
-      timer: 0
-    }
-  },
   computed: {
-    ...mapState(['isRunning', 'score', 'isMobile']),
-    ...mapGetters(['isDone']),
-    timerStatus () {
-      return this.isRunning && !this.isDone
-    }
+    ...mapState(['isRunning', 'score', 'isMobile', 'timer']),
+    ...mapGetters(['timerStatus'])
   },
   watch: {
-    timer (value) {
-      this.setTimer(value)
-    },
     timerStatus: {
       immediate: true,
       handler  (value) {
@@ -55,9 +44,9 @@ export default {
       setTimer: 'set/timer'
     }),
     startTimer () {
-      this.timer = 0
+      this.setTimer(0)
       this.$interval = Visibility.every(1000, () => {
-        this.timer++
+        this.setTimer(this.timer + 1)
       })
     },
     stopTimer () {

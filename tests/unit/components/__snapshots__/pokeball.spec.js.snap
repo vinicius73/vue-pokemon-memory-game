@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pokeball.vue renders component 1`] = `
+<div
+  class="pokeball__parent"
+>
+  <div
+    class="pokeball"
+  >
+    <div
+      class="pokeball__main"
+    >
+      <div
+        class="pokeball__button"
+      />
+    </div>
+  </div>
+</div>
+`;

@@ -1,14 +1,9 @@
 import Timer from '@/components/Timer.vue'
-import { install as Buefy } from '@/buefy'
-import { install as filters } from '@/support/filters'
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
+import { factoryVue } from '../helpers'
 import Vuex from 'vuex'
 
-const localVue = createLocalVue()
-
-localVue.use(Vuex)
-localVue.use(filters)
-localVue.use(Buefy)
+const localVue = factoryVue()
 
 jest.useFakeTimers()
 

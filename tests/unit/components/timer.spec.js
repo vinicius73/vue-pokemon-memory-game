@@ -32,10 +32,11 @@ describe('Timer.vue', () => {
       })
     }
     getters = {
-      timerStatus: () => true
+      timerStatus: ({ timerStatus }) => timerStatus
     }
     state = {
       timer: 0,
+      timerStatus: true, // for getter
       isRunning: true,
       score: 99,
       isMobile: false
@@ -99,5 +100,45 @@ describe('Timer.vue', () => {
       .forEach(selector => {
         expect(wrapper.find(selector).exists()).toBe(false)
       })
+  })
+
+  it('beforeDestroy', () => {
+    const wrapper = shallowMount(Timer, { store, localVue })
+    const stopTimer = wrapper.vm.stopTimer.bind(wrapper)
+    const stopTimerMock = jest.fn(() => {
+      stopTimer()
+    })
+
+    wrapper.setMethods({ stopTimer: stopTimerMock })
+
+    wrapper.destroy()
+
+    expect(stopTimerMock).toHaveBeenCalledTimes(1)
+  })
+
+  it('timerStatus', () => {
+    const wrapper = shallowMount(Timer, { store, localVue })
+
+    // original
+    const stopTimer = wrapper.vm.stopTimer.bind(wrapper)
+    const startTimer = wrapper.vm.startTimer.bind(wrapper)
+
+    // mock
+    const stopTimerMock = jest.fn(() => {
+      stopTimer()
+    })
+    const startTimerMock = jest.fn(() => {
+      startTimer()
+    })
+
+    wrapper.setMethods({ stopTimer: stopTimerMock, startTimer: startTimerMock })
+    jest.advanceTimersByTime(2000)
+
+    state.timerStatus = false
+    state.timerStatus = true
+    state.timerStatus = false
+
+    expect(stopTimerMock).toHaveBeenCalledTimes(2)
+    expect(startTimerMock).toHaveBeenCalledTimes(1)
   })
 })

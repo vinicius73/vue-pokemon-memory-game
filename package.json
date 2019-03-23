@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --modern",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "test:covarage": "vue-cli-service test:unit --collectCoverage"
   },
   "dependencies": {
     "buefy": "^0.7.2",

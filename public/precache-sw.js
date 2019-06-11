@@ -8,7 +8,7 @@ const imgRgx = new RegExp(/(https?:\/\/.*\.(?:png|jpg))/i)
 const handler = new self.workbox.strategies.CacheFirst({
   plugins: [
     new self.workbox.cacheableResponse.Plugin({
-      statuses: [0, 200]
+      statuses: [0, 200, 304]
     })
   ],
   cacheName: 'images'

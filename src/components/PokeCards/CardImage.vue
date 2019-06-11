@@ -1,18 +1,19 @@
 <template>
   <figure class="image is-1by1"
     :style="style"
-    :class="{ 'has-background-warning error': visible && error }">
+    :class="{ 'error': error }">
     <div class="placehold" v-if="!visible">
       <div>{{ placehold }}</div>
     </div>
-    <div v-if="found || (visible && error)"
+    <div v-if="found || showLabel"
       class="label fade-in">
-      <div>{{ pokemon.identifier || pokemon.id }}</div>
+      <div>{{ identifier }}</div>
     </div>
   </figure>
 </template>
 
 <script>
+import { getPattern } from '../../support/color'
 import { pokeDBSprite } from '../../support/utils'
 
 export default {
@@ -24,17 +25,31 @@ export default {
     placehold: String
   },
   data: () => ({
+    loading: true,
     error: true
   }),
   computed: {
     src () {
-      return pokeDBSprite(this.pokemon.identifier)
+      return pokeDBSprite(this.identifier)
+    },
+    identifier () {
+      const { pokemon } = this
+      return pokemon.identifier || pokemon.id
+    },
+    showLabel () {
+      return this.visible && (this.error || this.loading)
     },
     style () {
-      const { src, visible, error } = this
+      const { src, visible, error, loading } = this
 
-      if (error) {
+      if (loading) {
         return {}
+      }
+
+      if (error && visible) {
+        return {
+          'background-image': `${getPattern(this.identifier)}`
+        }
       }
 
       const image = visible
@@ -49,11 +64,17 @@ export default {
   mounted () {
     const im = new Image()
 
+    this.loading = true
+
+    im.setAttribute('importance', 'high')
+
     im.onerror = () => {
+      this.loading = false
       this.error = true
     }
 
     im.onload = () => {
+      this.loading = false
       this.error = false
     }
 
@@ -70,8 +91,9 @@ export default {
   background-position: center;
   transition: all .1s ease-in-out;
   &.error {
+    background-size: cover;
     .label {
-      background-color: #000;
+      // background-color: #000;
     }
   }
   .placehold {

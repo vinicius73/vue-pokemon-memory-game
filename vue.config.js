@@ -5,6 +5,7 @@ process.env.VUE_APP_VERSION = `${version}-${now}`
 
 module.exports = {
   configureWebpack: {
+    node: { Buffer: false },
     optimization: {
       splitChunks: {
         cacheGroups: {

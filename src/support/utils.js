@@ -15,7 +15,7 @@ const randomIntList = (length, max, min = 0) => {
 }
 
 const pokeDBSprite = key => {
-  return `https://img.pokemondb.net/artwork/${key}.jpg`
+  return `https://images.weserv.nl/?url=img.pokemondb.net/artwork/${key}.jpg`
 }
 
 const pokeApiSprite = id => {

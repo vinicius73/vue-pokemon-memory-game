@@ -1,13 +1,16 @@
 <template>
-  <div class="modal-card" style="max-width: 400px" ref="root">
+  <div class="modal-card modal-card-root" ref="root">
     <header class="modal-card-head has-background-danger">
       <p class="modal-card-title has-text-light">You got them all!!</p>
+      <button class="button is-small is-black" type="button" v-if="isMobile" @click="close">
+        <b-icon icon="close" />
+      </button>
     </header>
     <section class="modal-card-body">
-      <Pokeball />
+      <Pokeball v-if="!isMobile" />
 
       <div class="control canvas-content" ref="content">
-        <img class="only-canvas" src="img/8bits-coach.png">
+        <img src="img/8bits-coach.png">
         <h3>Pokémon - Memory Game</h3>
         <hr />
 
@@ -79,7 +82,7 @@ export default {
   components: { Pokeball },
   computed: {
     ...mapGetters(['levelCount']),
-    ...mapState(['score', 'level', 'timer', 'isEasyMode', 'isRouletteMode']),
+    ...mapState(['score', 'level', 'timer', 'isEasyMode', 'isRouletteMode', 'isMobile']),
     levelLabel () {
       return this.level * 2
     },
@@ -112,10 +115,13 @@ export default {
     ...mapMutations({
       setLoading: 'set/isLoading'
     }),
+    close () {
+      this.$parent.close()
+    },
     reload () {
       this.loadPokemon()
       this.$nextTick(() => {
-        this.$parent.close()
+        this.close()
       })
     },
     async save () {
@@ -124,12 +130,14 @@ export default {
       this.setLoading(true)
 
       const imageName = `pokemon-memory-game-${levelLabel}-${gameMode}-${score}.jpg`
+
       try {
         const canvas = await html2canvas(this.$refs.content, {
           logging: false,
           onclone: doc => {
             doc.querySelector('.canvas-content')
-              .classList.add('canvas')
+              .classList
+              .add('canvas') // customize css
           }
         })
 
@@ -203,5 +211,15 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .modal-card-root {
+    max-width: 400px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .modal-card-root {
+      max-width: initial;
+    }
   }
 </style>

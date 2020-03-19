@@ -34,7 +34,7 @@ export default {
         hitType: 'event',
         eventCategory: 'game',
         eventAction: 'level_select',
-        eventLabel: `Select Level`,
+        eventLabel: 'Select Level',
         eventValue: level * 2,
         nonInteraction: true
       })

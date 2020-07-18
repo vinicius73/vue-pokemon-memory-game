@@ -10,7 +10,7 @@
     "test:covarage": "vue-cli-service test:unit --collectCoverage"
   },
   "dependencies": {
-    "buefy": "^0.7.10",
+    "buefy": "^0.8.18",
     "downloadjs": "^1.4.7",
     "geopattern": "^1.2.3",
     "html2canvas": "^1.0.0-rc.3",
